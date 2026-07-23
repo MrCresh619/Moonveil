@@ -18,6 +18,7 @@ This repository hosts the public legal pages and the internal compliance documen
 - `legal/apple-app-privacy.md` — draft App Store privacy label mapping
 - `legal/record-of-processing.md` — lightweight GDPR record of processing activities
 - `legal/subprocessors.md` — processor and third-party register
+- `legal/legal-sources.md` — official store, vendor, GDPR and consumer-law sources
 
 ## Status
 

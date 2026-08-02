@@ -11,7 +11,7 @@ Google Play requires declarations for data collected or shared by the App **and 
 | Question | Draft answer | Conditions |
 |---|---|---|
 | Does the App allow users to create an account? | **Yes**, when production auth is enabled. | Guest mode does not remove the requirement once any in-app account creation/sign-in flow exists. |
-| Can users request account deletion in the App? | **Yes — required before launch.** | Implement and test `Settings/Account → Delete account`. Backend PR #75 or equivalent must be deployed. |
+| Can users request account deletion in the App? | **Yes.** | `Account → Delete account` calls `DELETE /me`; verify the deployed endpoint and RevenueCat deletion in an end-to-end release test. |
 | Is there an external account deletion resource? | **Yes — `account-deletion.html`.** | Replace placeholders, publish over HTTPS and enter the final URL in Play Console. |
 | Is data encrypted in transit? | **Yes**, provided all production endpoints use HTTPS/TLS. | Verify API, R2/CDN, legal pages and third-party calls. |
 | Can users request deletion of collected data? | **Yes.** | Account deletion plus separate optional-backup deletion. Disclose lawful retention. |
@@ -60,7 +60,7 @@ Google Play requires declarations for data collected or shared by the App **and 
 
 | Play data type | Collected? | Draft answer |
 |---|---|---|
-| Device or other IDs | **To verify.** | Moonveil uses account/user IDs, but the RevenueCat/Expo/store SDK may process device-scoped identifiers. Check the exact SDK versions in Play SDK Index and network traffic from the release AAB. |
+| Device or other IDs | **Yes for the RevenueCat app-user identifier.** | Used for purchase entitlement and restore, linked to the Moonveil account. Audit RevenueCat 10.4.2, Expo and store SDK network traffic for any additional device-scoped identifiers in the final AAB. |
 
 ### Categories expected to be “No” unless the final build changes
 

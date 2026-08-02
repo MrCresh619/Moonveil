@@ -9,7 +9,7 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 
 ### Operator and public documents
 
-- [ ] Replace every `[[PLACEHOLDER]]` in the public HTML pages.
+- [x] Replace every placeholder field in the public HTML pages.
 - [ ] Confirm the exact legal entity operating Moonveil.
 - [ ] Publish the legal business address and tax/registration identifier required for the service and store account.
 - [ ] Create monitored `support` and `privacy` email addresses.
@@ -21,7 +21,8 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 
 ### Account deletion
 
-- [ ] Merge, deploy and test backend account deletion equivalent to backend PR #75.
+- [x] Merge backend account deletion equivalent to backend PR #75.
+- [ ] Deploy and test account deletion end-to-end, including RevenueCat customer deletion and retry behaviour.
 - [ ] Confirm deletion removes account identities, optional backup, Moonveil billing metadata, audit history and the RevenueCat subscriber.
 - [ ] Add an easy-to-find in-app path: `Settings/Account → Delete account`.
 - [ ] Add a separate delete-backup action that remains available after Premium expires.
@@ -34,8 +35,8 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 
 ### Billing and product configuration
 
-- [ ] Add and verify the RevenueCat SDK in the actual mobile release branch/binary.
-- [ ] Create the Google Play subscription product matching `moonveil_premium_monthly`.
+- [x] Add RevenueCat Purchases and Purchases UI SDK 10.4.2 to the mobile branch.
+- [ ] Create Google Play/App Store products matching `monthly`, `yearly` and `lifetime`.
 - [ ] Create the equivalent App Store subscription product and subscription group before iOS launch.
 - [ ] Configure the RevenueCat entitlement `premium`, offering, package and product mappings.
 - [ ] Verify identifiers for `profile`, `custom_spreads`, `backup` and `sync` or simplify to one canonical premium entitlement.
@@ -52,9 +53,9 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 
 - [ ] Treat backup as optional and disabled by default.
 - [ ] Show a clear pre-upload summary of categories that will leave the device.
-- [ ] Add a separate affirmative opt-in; no pre-ticked checkbox or bundled consent.
-- [ ] Where backup may include spiritual/journal content revealing beliefs, collect explicit consent suitable for GDPR Article 9.
-- [ ] Record consent version, timestamp and scope without putting sensitive content in the consent record.
+- [x] Add a separate affirmative opt-in; no pre-ticked checkbox or bundled consent.
+- [x] Where backup may include spiritual/journal content revealing beliefs, collect explicit consent suitable for GDPR Article 9.
+- [x] Record consent version, timestamp and scope without putting sensitive content in the consent record.
 - [ ] Allow withdrawal and backup deletion as easily as enabling backup.
 - [ ] Confirm backup deletion works without Premium.
 - [ ] Do not put profile name, birth date, readings, notes or beliefs into RevenueCat attributes, logs or analytics.
@@ -69,7 +70,7 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [ ] Execute/accept DPAs with RevenueCat, hosting/database provider and any support/email provider.
 - [ ] Review Cloudflare and Expo contractual/data-processing terms for the exact services used.
 - [ ] Confirm data locations and international-transfer safeguards (adequacy/SCCs as applicable).
-- [ ] Set concrete retention periods for security logs, support tickets and operational backups.
+- [x] Set concrete retention periods for security logs, support tickets and operational backups.
 - [ ] Configure production retention so it matches the public policy.
 - [ ] Establish an electronic workflow for access, correction, deletion, restriction, portability and objection requests.
 - [ ] Respond to rights requests without undue delay and generally within one month.

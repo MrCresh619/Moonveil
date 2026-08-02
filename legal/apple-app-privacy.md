@@ -68,7 +68,7 @@ Audit the final archive and vendor documentation for:
 - any crash reporting, support, analytics or attribution SDK;
 - networking/CDN libraries with telemetry.
 
-The reviewed mobile `package.json` did not yet contain RevenueCat, Firebase Analytics, Sentry or an advertising SDK. This is not proof of the final native archive contents.
+The reviewed mobile build dependencies include RevenueCat Purchases and Purchases UI 10.4.2. No Firebase Analytics, Sentry or advertising SDK is declared in `package.json`; the final native archive and privacy manifests must still be audited for transitive collection.
 
 ## Account deletion and review readiness
 

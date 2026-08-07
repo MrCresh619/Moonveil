@@ -1,7 +1,7 @@
 # Moonveil launch legal and privacy checklist
 
-Review date: **23 July 2026**  
-Status: **Draft — blocking items remain**
+Review date: **7 August 2026**
+Status: **Audited working checklist — blocking items remain**
 
 This is an implementation checklist, not a legal opinion. Obtain a final review from a lawyer familiar with Polish/EU consumer, privacy and digital-services law before production monetisation.
 
@@ -13,16 +13,17 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [ ] Confirm the exact legal entity operating Moonveil.
 - [ ] Publish the legal business address and tax/registration identifier required for the service and store account.
 - [ ] Create monitored `support` and `privacy` email addresses.
-- [ ] Set the effective date and version for each document.
+- [x] Set the effective date and version for each public document.
 - [ ] Publish the pages on a stable HTTPS URL with no login, geoblocking or editable-document UI.
 - [ ] Link Privacy Policy, Terms and Account Deletion from the App settings/paywall/account screens.
 - [ ] Put the canonical privacy URL in Google Play Console and App Store Connect.
-- [ ] Do not merge the old claim that “no data leaves the device”; it is incompatible with accounts, RevenueCat and backup.
+- [x] Remove the old claim that “no data leaves the device”; it is incompatible with accounts, purchase processing and backup.
 
 ### Account deletion
 
 - [x] Merge backend account deletion equivalent to backend PR #75.
-- [ ] Deploy and test account deletion end-to-end, including RevenueCat customer deletion and retry behaviour.
+- [x] Deploy the account-deletion endpoint and external purchase-provider deletion request.
+- [ ] Test account deletion end-to-end, including external customer deletion and failure behaviour, and retain evidence.
 - [ ] Confirm deletion removes account identities, optional backup, Moonveil billing metadata, audit history and the RevenueCat subscriber.
 - [ ] Add an easy-to-find in-app path: `Settings/Account → Delete account`.
 - [ ] Add a separate delete-backup action that remains available after Premium expires.
@@ -36,9 +37,12 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 ### Billing and product configuration
 
 - [x] Add RevenueCat Purchases and Purchases UI SDK 10.4.2 to the mobile branch.
-- [ ] Create Google Play/App Store products matching `monthly`, `yearly` and `lifetime`.
+- [x] Configure the live RevenueCat offering with monthly and annual Play packages.
+- [ ] Configure and verify the equivalent App Store products before iOS launch.
+- [ ] Do not expose or advertise a lifetime package unless a live store product and reviewed purchase screen are added.
 - [ ] Create the equivalent App Store subscription product and subscription group before iOS launch.
-- [ ] Configure the RevenueCat entitlement `premium`, offering, package and product mappings.
+- [x] Configure the RevenueCat entitlement `premium` and live monthly/annual offering mappings.
+- [ ] Publish and test the intended paywall/purchase screen; no RevenueCat paywall was published at audit time.
 - [ ] Verify identifiers for `profile`, `custom_spreads`, `backup` and `sync` or simplify to one canonical premium entitlement.
 - [ ] Define every one-time deck/module product ID and target key before sale.
 - [ ] Ensure a one-time deck purchase does not accidentally require an active subscription.
@@ -55,7 +59,7 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [ ] Show a clear pre-upload summary of categories that will leave the device.
 - [x] Add a separate affirmative opt-in; no pre-ticked checkbox or bundled consent.
 - [x] Where backup may include spiritual/journal content revealing beliefs, collect explicit consent suitable for GDPR Article 9.
-- [ ] Align the backup API and persist consent version, timestamp and scope without putting sensitive content in the consent record; the mobile client submits these fields, but the current backend rejects them as non-whitelisted and the model cannot store them.
+- [x] Align the deployed backup API and persist consent version, timestamp and scope without putting sensitive content in the consent record.
 - [ ] Allow withdrawal and backup deletion as easily as enabling backup.
 - [ ] Confirm backup deletion works without Premium.
 - [ ] Do not put profile name, birth date, readings, notes or beliefs into RevenueCat attributes, logs or analytics.
@@ -67,7 +71,8 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 
 - [ ] Complete the `record-of-processing.md` with real values and owner names.
 - [ ] Identify the controller and all processors/sub-processors.
-- [ ] Execute/accept DPAs with RevenueCat, hosting/database provider and any support/email provider.
+- [ ] **Blocker:** execute and archive the Contabo DPA; the panel showed no concluded DPA on 7 August 2026.
+- [ ] Verify and archive the applicable RevenueCat and support/email-provider data-processing terms.
 - [ ] Review Cloudflare and Expo contractual/data-processing terms for the exact services used.
 - [ ] Confirm data locations and international-transfer safeguards (adequacy/SCCs as applicable).
 - [x] Set concrete retention periods for security logs, support tickets and operational backups.
@@ -83,7 +88,9 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 
 ## Security and production operations
 
-- [ ] Use HTTPS/TLS for every API, content and legal-page endpoint.
+- [x] Use HTTPS/TLS for the inspected production API, content and legal-page endpoints.
+- [x] Enforce minimum TLS 1.2 on the Cloudflare content custom domain (raised from 1.0 on 7 August 2026).
+- [ ] Establish an approved Contabo access/port plan before assigning a provider firewall; no firewall was assigned at audit time.
 - [ ] Use strong JWT/admin/webhook secrets and rotate them after exposure.
 - [ ] Restrict admin endpoints through VPN, Cloudflare Access or IP allowlist.
 - [ ] Run the backend as non-root with resource limits and a read-only filesystem where practical.
@@ -102,14 +109,14 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [ ] Provide a public Privacy Policy URL that names Moonveil and the legal operator.
 - [ ] Provide the external account-deletion URL.
 - [ ] Complete all account-deletion questions.
-- [ ] Complete Data safety using the final binary and every included SDK.
+- [ ] **Blocker:** replace the live Data safety form, which incorrectly declares no collection/sharing and no encryption in transit. A corrected draft now records collection, TLS, OAuth and separate data deletion; complete data types and URLs after the merge/final-binary audit, then submit.
 - [ ] Reconcile the Data safety form with `legal/google-play-data-safety.md`.
 - [ ] Declare collection of account user IDs, optional email and purchase history where applicable.
 - [ ] Declare optional cloud-backup user content only if the feature is in the submitted build.
 - [ ] Verify whether RevenueCat/Expo/store SDKs require Device or other IDs, diagnostics or app-activity declarations.
 - [ ] Confirm data is encrypted in transit.
 - [ ] Confirm deletion is available in-app and externally.
-- [ ] Add subscription product, base plan, offers and local prices.
+- [x] Configure the inspected Play subscription product with monthly and annual base plans and RevenueCat packages.
 - [ ] Add clear subscription/paywall copy and screenshots for review.
 - [ ] Test through closed testing with licensed testers and real Play Billing test products.
 - [ ] Ensure the developer profile’s public legal identity/contact is correct.
@@ -159,7 +166,7 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 
 ## Release evidence to archive
 
-- [ ] Final legal-page screenshots and URLs.
+- [ ] Final legal-page screenshots and URLs after PR #2 is merged; then update Play/OAuth references.
 - [ ] Version/hash of Terms and Privacy accepted by each account where acceptance is required.
 - [ ] Google Data safety submission export/screenshots.
 - [ ] Apple App Privacy submission screenshots.

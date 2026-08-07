@@ -1,6 +1,6 @@
-# Apple App Privacy label — Moonveil draft
+# Apple App Privacy label — Moonveil audited working answers
 
-Review date: **23 July 2026**  
+Review date: **7 August 2026**
 Bundle ID: `com.tealdev.moonveil`  
 Status: **Provisional — complete from the final iOS archive and every embedded SDK before submission**
 
@@ -13,8 +13,8 @@ Apple’s App Privacy answers must include data collected by Moonveil and third-
 | Contact Info | Email Address | **Yes, optional** when supplied by Google/Apple or another login method. | **Yes** for account users. | **No** | App Functionality, Account Management, Developer Communications for user-initiated support. |
 | Identifiers | User ID | **Yes** | **Yes** | **No** | App Functionality, Account Management, purchase restore, security/fraud prevention. |
 | Purchases | Purchase History | **Yes** for purchasers/subscribers. | **Yes** | **No** | App Functionality, Account Management, purchase restore and support. |
-| User Content | Other User Content | **Only if optional cloud backup is included in the submitted build.** | **Yes** | **No** | App Functionality — backup, restore and sync. |
-| Sensitive Info | Potential spiritual/religious-belief content | **Only if optional backup transmits it.** | **Yes** | **No** | App Functionality; separate opt-in/explicit consent required where applicable. Confirm the correct Apple category from final backup schema. |
+| User Content | Other User Content | **Yes when optional cloud backup is used.** | **Yes** | **No** | App Functionality — backup, restore and sync. |
+| Sensitive Info | Potential spiritual/religious-belief content | **Yes when included in optional backup.** | **Yes** | **No** | App Functionality; a separate opt-in/explicit consent step is implemented. Confirm the exact Apple category from the final backup schema. |
 | Diagnostics | Crash Data / Other Diagnostic Data | **To verify.** | Usually depends on SDK configuration. | **No** | App Functionality or Analytics only if actually collected. |
 | Usage Data | Product Interaction | **Probably No for analytics.** | n/a | **No** | Recheck RevenueCat and Expo SDK behaviour. Purchase lifecycle belongs under Purchases. |
 | Other Data | Technical security/request metadata | **To verify against Apple definitions.** | Potentially linked through authenticated requests. | **No** | App Functionality, security and fraud prevention. |
@@ -99,7 +99,7 @@ The paywall/purchase screen should clearly show:
 2. Export the list of embedded frameworks/SDKs and privacy manifests.
 3. Exercise sign-in, purchase, restore, backup and deletion while observing network traffic.
 4. Compare actual collection with this draft.
-5. Update the public Privacy Policy first if a new data category/vendor appears.
+5. Update the public Privacy Policy if a new data category, purpose, legal basis or recipient category appears; record routine vendor replacements in the internal provider register.
 6. Submit the App Privacy label and archive screenshots with the release version/SHA.
 
 Use Apple’s current App Store Connect and App Review documentation at submission time; requirements can change.

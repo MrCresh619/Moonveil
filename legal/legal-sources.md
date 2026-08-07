@@ -1,6 +1,6 @@
 # Moonveil legal and store-policy source register
 
-Last checked: **23 July 2026**
+Last checked: **7 August 2026**
 
 Use primary/official sources when reviewing or updating Moonveil legal documents. Store rules and vendor terms change; re-check the current version before every production submission.
 
@@ -31,7 +31,7 @@ Key implementation point: apps supporting account creation must let users initia
 
 Key implementation points:
 
-- Moonveil is controller and RevenueCat is processor for customer personal data under the current DPA.
+- Moonveil is controller and RevenueCat is expected to act as processor for customer personal data; the applicable DPA must be accepted where required and archived. Acceptance was not verified in the 7 August 2026 audit.
 - Restricted transfers may rely on the European Commission’s Standard Contractual Clauses.
 - Moonveil remains responsible for lawful notices, instructions, minimisation and rights handling.
 - Do not send names, dates of birth, readings, notes, beliefs or other special-category profile data to RevenueCat attributes or billing metadata.

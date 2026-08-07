@@ -27,9 +27,9 @@
 <h2>3. Data processed when you use online features</h2>
 <table>
 <tr><th>Category</th><th>Data</th><th>When</th></tr>
-<tr><td>Account and authentication</td><td>Moonveil user ID, Google or Apple provider and provider ID, optional verified email address, account status, login time and account creation/update times.</td><td>When you create or use an account. Moonveil does not receive your Google or Apple password.</td></tr>
-<tr><td>Purchases and access</td><td>RevenueCat app-user ID, store, product and entitlement identifiers, subscription status, purchase, renewal, cancellation, refund and restore events, relevant dates, price/currency metadata and access audit records.</td><td>When you view or use purchase, subscription, restore or paid-access features. Google Play or Apple processes payment credentials; Moonveil does not receive your full payment-card number.</td></tr>
-<tr><td>Optional cloud backup</td><td>A JSON copy of the local profile, custom spreads and slots, readings and cards, and notes; backup schema version, revision and timestamps. The current upload limit is 5 MB.</td><td>Only after you are signed in and confirm a backup upload. A successfully saved backup is stored in the Moonveil PostgreSQL database, not in Cloudflare R2.</td></tr>
+<tr><td>Account and authentication</td><td>Moonveil user ID, sign-in provider and provider ID, optional verified email address, account status, login time and account creation/update times.</td><td>When you create or use an account. Moonveil does not receive the password used with an external sign-in provider.</td></tr>
+<tr><td>Purchases and access</td><td>Purchase-service app-user ID, store, product and entitlement identifiers, subscription status, purchase, renewal, cancellation, refund and restore events, relevant dates, price/currency metadata and access audit records.</td><td>When you view or use purchase, subscription, restore or paid-access features. The relevant app store processes payment credentials; Moonveil does not receive your full payment-card number.</td></tr>
+<tr><td>Optional cloud backup</td><td>A JSON copy of the local profile, custom spreads and slots, readings and cards, and notes; backup schema version, revision and timestamps. The current upload limit is 5 MB.</td><td>Only after you are signed in and confirm a backup upload. A successfully saved backup is stored in Moonveil's private production database, not in the public content/object-storage service.</td></tr>
 <tr><td>Support and rights requests</td><td>Email address, message, attachments and any information you choose to provide.</td><td>When you contact us.</td></tr>
 <tr><td>Technical and security data</td><td>At application level: request method/path, response status, duration, timestamps and error stack details for server failures. Infrastructure and service providers may also process IP address, device/app and connection metadata, and their own security or diagnostic logs.</td><td>When the App, a browser or a third-party SDK communicates with online services.</td></tr>
 </table>
@@ -49,34 +49,33 @@
 </table>
 
 <h2>6. Recipients and service providers</h2>
-<p>Only the providers needed for a feature receive the relevant data:</p>
+<p>Only the following categories of recipients receive data needed for the relevant feature:</p>
 <ul>
-<li><strong>Google</strong> – Google Sign-In, Google Play billing and Android platform services;</li>
-<li><strong>Apple</strong> – Sign in with Apple, App Store billing and iOS platform services;</li>
-<li><strong>RevenueCat</strong> – purchase, subscription and entitlement management;</li>
-<li>the contracted <strong>production VPS and PostgreSQL hosting provider</strong> – the Moonveil API, account and billing database, optional backup, operational logs and disaster-recovery copies;</li>
-<li><strong>Cloudflare</strong> – R2/object storage and delivery of application content, and DNS/security services where configured; optional user backups are not stored in R2;</li>
-<li><strong>Expo / 650 Industries</strong> – build and over-the-air update services included in the released App;</li>
-<li><strong>GitHub Pages</strong> – hosting these public legal pages;</li>
-<li>our email provider, professional advisers or public authorities where necessary to answer a request, defend a claim or comply with law.</li>
+<li><strong>identity, operating-system and app-store providers</strong> – sign-in, platform services, store billing and transaction records;</li>
+<li><strong>purchase and entitlement service providers</strong> – subscription status, purchase restoration and paid-access management;</li>
+<li><strong>production cloud, VPS and database providers</strong> – the Moonveil API, account and billing database, optional backup, operational logs and recovery copies;</li>
+<li><strong>content-delivery, object-storage, DNS and security providers</strong> – public application assets and network protection; optional user backups are not stored in public content storage;</li>
+<li><strong>application build, update and distribution providers</strong> – build metadata, release delivery and over-the-air updates where enabled;</li>
+<li><strong>legal-page hosting and source-control providers</strong> – delivery of these public documents and source management, without production account or backup data;</li>
+<li><strong>email/support providers, professional advisers and public authorities</strong> where necessary to answer a request, defend a claim or comply with law.</li>
 </ul>
-<p>Google, Apple and other providers may act as independent controllers for their own accounts, stores, fraud prevention and platform operations. Their privacy notices also apply.</p>
+<p>Moonveil keeps an internal, dated provider register containing the current provider, contracting entity, data location, safeguards and deletion arrangements for each category. A provider may act as an independent controller for its own account, store, fraud-prevention or platform operations; its privacy notice then also applies.</p>
 
 <h2>7. International transfers</h2>
 <p>Some providers operate globally and may process data outside the European Economic Area, including in the United States. Depending on the provider and processing, safeguards may include an adequacy decision (including participation in the EU–US Data Privacy Framework where applicable), the European Commission’s Standard Contractual Clauses, or another mechanism permitted by Chapter V GDPR. You may contact us for information about the safeguard relevant to your data.</p>
 
 <h2>8. Advertising, analytics and tracking</h2>
-<p>The reviewed App does not include advertising SDKs, behavioural advertising, cross-app tracking, Firebase Analytics or Sentry. We do not sell personal data. RevenueCat, the app stores, Expo and hosting providers may process technical data necessary to provide their services. If non-essential analytics or advertising is added, this policy and the store disclosures will be updated before release and consent will be obtained where required.</p>
+<p>The reviewed App does not include advertising SDKs, behavioural advertising, cross-app tracking or non-essential analytics/crash-reporting SDKs. We do not sell personal data. Store, purchase, build/update and infrastructure providers may process technical data necessary to provide their services. If non-essential analytics or advertising is added, this policy and the store disclosures will be updated before release and consent will be obtained where required.</p>
 
 <h2>9. Retention</h2>
 <ul>
 <li>Local data remains on the device until you delete it, clear the App’s data or uninstall the App. Copies controlled by your operating-system or device-backup provider follow your settings and that provider’s rules.</li>
 <li>Account, identity, entitlement and Moonveil billing/audit data is kept while the account exists and is removed from the active database when the account is deleted, unless a specific record must be isolated and retained under law or for a legal claim.</li>
 <li>The optional cloud backup is kept until you delete that backup or the account.</li>
-<li>The production policy target for database disaster-recovery files is 14 days and no more than 20 copies. The current cleanup runs during a production deployment, so a file may remain longer than 14 days if no later deployment occurs. Deleted data in such a restricted copy is not used for ordinary processing.</li>
+<li>Moonveil-managed database recovery files are subject to a scheduled age-and-count cleanup: up to 14 days and no more than 20 copies. These copies are kept in the restricted production environment and are not used for ordinary processing. Provider-level automatic backups or snapshots are not relied upon unless they are separately enabled, documented and brought under the same deletion rules.</li>
 <li>Application request logs do not currently have a code-enforced time limit; production containers rotate them by file size. The operational target is deletion within 30 days unless a relevant extract is needed for a documented security incident or legal claim.</li>
 <li>The support-correspondence policy target is deletion within 12 months after closure. This is a manual/provider-level process rather than an application-enforced control. Information needed for a complaint or claim may be retained for the applicable limitation period.</li>
-<li>Google, Apple, RevenueCat and other independent providers apply their own retention rules to data they control.</li>
+<li>Independent store, identity and platform providers apply their own retention rules to data they control.</li>
 </ul>
 
 <h2>10. Security</h2>
@@ -86,8 +85,8 @@
 <p>Subject to the GDPR and applicable law, you may request access, rectification, erasure, restriction, portability or object to processing, and may withdraw consent at any time. Send requests to <a href="mailto:tealdevmp@gmail.com">tealdevmp@gmail.com</a>. We may ask for proportionate identity verification. We respond without undue delay and generally within one month. You may complain to a supervisory authority; in Poland this is the President of the Personal Data Protection Office (UODO).</p>
 
 <h2>12. Backup deletion, account deletion and subscriptions</h2>
-<p>You can delete only the cloud backup in the App’s account screen, including after Premium access expires. This does not delete the account or local device data. You can delete the account in the App or use the <a href="account-deletion.html">external deletion instructions</a>. Account deletion removes the backend account and its identities, optional backup, Moonveil purchase/entitlement records and the linked RevenueCat subscriber. The App also clears its local user database after successful account deletion.</p>
-<p>Deleting a backup or account does <strong>not</strong> cancel an active Google Play or App Store subscription. Cancel the subscription separately in the relevant store account. Uninstalling the App alone does not delete a Moonveil account or cancel a subscription.</p>
+<p>You can delete only the cloud backup in the App’s account screen, including after Premium access expires. This does not delete the account or local device data. You can delete the account in the App or use the <a href="account-deletion.html">external deletion instructions</a>. Account deletion removes the backend account and its identities, optional backup, Moonveil purchase/entitlement records and the linked subscriber record held by the purchase-entitlement provider. The App also clears its local user database after successful account deletion.</p>
+<p>Deleting a backup or account does <strong>not</strong> cancel an active app-store subscription. Cancel the subscription separately in the relevant store account. Uninstalling the App alone does not delete a Moonveil account or cancel a subscription.</p>
 
 <h2>13. Children</h2>
 <p>Moonveil is intended for users aged 16 and over and is not directed to children. We do not knowingly create an account for a child below the age at which they can validly consent to an online service in their country. If you believe a child has provided data contrary to this rule, contact us so that we can investigate and delete it where appropriate.</p>
@@ -111,9 +110,9 @@
 <h2>3. Dane przetwarzane przy funkcjach online</h2>
 <table>
 <tr><th>Kategoria</th><th>Dane</th><th>Kiedy</th></tr>
-<tr><td>Konto i logowanie</td><td>Identyfikator użytkownika Moonveil, dostawca Google lub Apple i identyfikator u tego dostawcy, opcjonalny zweryfikowany adres e-mail, status konta, czas logowania oraz czas utworzenia/aktualizacji konta.</td><td>Po utworzeniu lub użyciu konta. Moonveil nie otrzymuje hasła Google ani Apple.</td></tr>
-<tr><td>Zakupy i dostęp</td><td>RevenueCat app-user ID, sklep, identyfikatory produktu i uprawnień, status subskrypcji, zdarzenia zakupu, odnowienia, anulowania, zwrotu i przywrócenia, odpowiednie daty, dane ceny/waluty oraz historia audytu dostępu.</td><td>Przy użyciu funkcji zakupu, subskrypcji, restore lub płatnego dostępu. Dane płatnicze obsługuje Google Play albo Apple; Moonveil nie otrzymuje pełnego numeru karty.</td></tr>
-<tr><td>Opcjonalny backup w chmurze</td><td>Kopia JSON lokalnego profilu, własnych rozkładów i pozycji, odczytów i kart oraz notatek; wersja schematu, rewizja i znaczniki czasu. Obecny limit wysyłki to 5 MB.</td><td>Tylko po zalogowaniu i potwierdzeniu wysłania backupu. Pomyślnie zapisany backup jest przechowywany w bazie PostgreSQL Moonveil, a nie w Cloudflare R2.</td></tr>
+<tr><td>Konto i logowanie</td><td>Identyfikator użytkownika Moonveil, dostawca logowania i identyfikator u tego dostawcy, opcjonalny zweryfikowany adres e-mail, status konta, czas logowania oraz czas utworzenia/aktualizacji konta.</td><td>Po utworzeniu lub użyciu konta. Moonveil nie otrzymuje hasła używanego u zewnętrznego dostawcy logowania.</td></tr>
+<tr><td>Zakupy i dostęp</td><td>Identyfikator użytkownika w usłudze zakupów, sklep, identyfikatory produktu i uprawnień, status subskrypcji, zdarzenia zakupu, odnowienia, anulowania, zwrotu i przywrócenia, odpowiednie daty, dane ceny/waluty oraz historia audytu dostępu.</td><td>Przy użyciu funkcji zakupu, subskrypcji, restore lub płatnego dostępu. Dane płatnicze obsługuje odpowiedni sklep z aplikacjami; Moonveil nie otrzymuje pełnego numeru karty.</td></tr>
+<tr><td>Opcjonalny backup w chmurze</td><td>Kopia JSON lokalnego profilu, własnych rozkładów i pozycji, odczytów i kart oraz notatek; wersja schematu, rewizja i znaczniki czasu. Obecny limit wysyłki to 5 MB.</td><td>Tylko po zalogowaniu i potwierdzeniu wysłania backupu. Pomyślnie zapisany backup jest przechowywany w prywatnej produkcyjnej bazie Moonveil, a nie w publicznej usłudze przechowywania treści.</td></tr>
 <tr><td>Pomoc i realizacja praw</td><td>Adres e-mail, wiadomość, załączniki i dobrowolnie podane informacje.</td><td>Gdy kontaktujesz się z nami.</td></tr>
 <tr><td>Dane techniczne i bezpieczeństwa</td><td>Na poziomie aplikacji serwerowej: metoda/ścieżka żądania, status odpowiedzi, czas obsługi, znaczniki czasu i szczegóły stosu błędu przy awarii serwera. Dostawcy infrastruktury i usług mogą też przetwarzać adres IP, dane urządzenia/Aplikacji i połączenia oraz własne logi bezpieczeństwa lub diagnostyczne.</td><td>Gdy Aplikacja, przeglądarka lub zewnętrzny SDK łączy się z usługą online.</td></tr>
 </table>
@@ -133,34 +132,33 @@
 </table>
 
 <h2>6. Odbiorcy i dostawcy usług</h2>
-<p>Odpowiednie dane otrzymują tylko dostawcy potrzebni do obsługi danej funkcji:</p>
+<p>Odpowiednie dane otrzymują wyłącznie następujące kategorie odbiorców potrzebne do obsługi danej funkcji:</p>
 <ul>
-<li><strong>Google</strong> – Google Sign-In, płatności Google Play i usługi platformy Android;</li>
-<li><strong>Apple</strong> – Sign in with Apple, płatności App Store i usługi platformy iOS;</li>
-<li><strong>RevenueCat</strong> – zarządzanie zakupami, subskrypcjami i uprawnieniami;</li>
-<li>zakontraktowany <strong>dostawca produkcyjnego VPS i PostgreSQL</strong> – API Moonveil, baza kont i rozliczeń, opcjonalny backup, logi operacyjne i kopie awaryjne;</li>
-<li><strong>Cloudflare</strong> – R2/storage obiektowy i dostarczanie treści Aplikacji oraz DNS/bezpieczeństwo, jeśli skonfigurowane; backup użytkownika nie jest przechowywany w R2;</li>
-<li><strong>Expo / 650 Industries</strong> – usługi buildów i aktualizacji over-the-air zawarte w wydanej Aplikacji;</li>
-<li><strong>GitHub Pages</strong> – hosting tych publicznych stron prawnych;</li>
-<li>nasz dostawca poczty, doradcy lub organy publiczne, jeśli jest to potrzebne do obsługi wniosku, obrony roszczeń lub wykonania prawa.</li>
+<li><strong>dostawcy tożsamości, systemu operacyjnego i sklepów z aplikacjami</strong> – logowanie, usługi platformowe, płatności sklepowe i rejestry transakcji;</li>
+<li><strong>dostawcy obsługi zakupów i uprawnień</strong> – status subskrypcji, restore zakupów i zarządzanie płatnym dostępem;</li>
+<li><strong>dostawcy chmury produkcyjnej, VPS i bazy danych</strong> – API Moonveil, baza kont i rozliczeń, opcjonalny backup, logi operacyjne i kopie awaryjne;</li>
+<li><strong>dostawcy dostarczania treści, storage obiektowego, DNS i bezpieczeństwa</strong> – publiczne zasoby Aplikacji i ochrona sieciowa; backup użytkownika nie jest przechowywany w publicznym storage treści;</li>
+<li><strong>dostawcy buildów, aktualizacji i dystrybucji Aplikacji</strong> – metadane buildów, dystrybucja wydań i aktualizacje over-the-air, jeśli są włączone;</li>
+<li><strong>dostawcy hostingu stron prawnych i kontroli wersji</strong> – dostarczanie tych publicznych dokumentów i zarządzanie kodem, bez danych kont produkcyjnych i backupów;</li>
+<li><strong>dostawcy poczty/wsparcia, doradcy i organy publiczne</strong>, jeśli jest to potrzebne do obsługi wniosku, obrony roszczeń lub wykonania prawa.</li>
 </ul>
-<p>Google, Apple i inni dostawcy mogą działać jako odrębni administratorzy w zakresie własnych kont, sklepów, zapobiegania oszustwom i działania platform. Zastosowanie mają również ich polityki prywatności.</p>
+<p>Moonveil prowadzi wewnętrzny, datowany rejestr zawierający bieżącego dostawcę, podmiot umowny, lokalizację danych, zabezpieczenia i zasady usuwania dla każdej kategorii. Dostawca może działać jako odrębny administrator w zakresie własnych kont, sklepów, zapobiegania oszustwom lub działania platformy; wtedy zastosowanie ma także jego polityka prywatności.</p>
 
 <h2>7. Transfery poza EOG</h2>
 <p>Niektórzy dostawcy działają globalnie i mogą przetwarzać dane poza Europejskim Obszarem Gospodarczym, w tym w USA. Zależnie od dostawcy i operacji zabezpieczeniem może być decyzja stwierdzająca odpowiedni stopień ochrony (w tym udział w EU–US Data Privacy Framework, gdy ma zastosowanie), standardowe klauzule umowne Komisji Europejskiej albo inny mechanizm dozwolony w rozdziale V RODO. Możesz skontaktować się z nami, aby uzyskać informacje o zabezpieczeniu dotyczącym Twoich danych.</p>
 
 <h2>8. Reklamy, analityka i śledzenie</h2>
-<p>Sprawdzona wersja Aplikacji nie zawiera SDK reklamowych, reklamy behawioralnej, śledzenia między aplikacjami, Firebase Analytics ani Sentry. Nie sprzedajemy danych osobowych. RevenueCat, sklepy, Expo i dostawcy hostingu mogą przetwarzać dane techniczne niezbędne do świadczenia usług. Jeśli dodamy niekonieczną analitykę lub reklamy, przed wydaniem zaktualizujemy tę politykę i deklaracje sklepowe oraz uzyskamy zgodę, jeżeli będzie wymagana.</p>
+<p>Sprawdzona wersja Aplikacji nie zawiera SDK reklamowych, reklamy behawioralnej, śledzenia między aplikacjami ani niekoniecznych SDK analitycznych/crash-reporting. Nie sprzedajemy danych osobowych. Dostawcy sklepu, zakupów, buildów/aktualizacji i infrastruktury mogą przetwarzać dane techniczne niezbędne do świadczenia usług. Jeśli dodamy niekonieczną analitykę lub reklamy, przed wydaniem zaktualizujemy tę politykę i deklaracje sklepowe oraz uzyskamy zgodę, jeżeli będzie wymagana.</p>
 
 <h2>9. Retencja</h2>
 <ul>
 <li>Dane lokalne pozostają na urządzeniu do ich usunięcia, wyczyszczenia danych Aplikacji lub odinstalowania. Kopie kontrolowane przez system operacyjny lub dostawcę kopii urządzenia podlegają ustawieniom użytkownika i zasadom tego dostawcy.</li>
 <li>Dane konta, tożsamości, uprawnień i rozliczeń/audytu Moonveil są przechowywane przez czas istnienia konta i usuwane z aktywnej bazy po usunięciu konta, chyba że konkretny zapis trzeba wydzielić i zachować na podstawie prawa lub dla roszczenia.</li>
 <li>Opcjonalny backup jest przechowywany do usunięcia backupu albo konta.</li>
-<li>Celem polityki dla produkcyjnych kopii awaryjnych bazy jest 14 dni i nie więcej niż 20 plików. Obecne czyszczenie uruchamia się podczas wdrożenia produkcyjnego, dlatego plik może pozostać dłużej niż 14 dni, jeżeli nie nastąpi kolejne wdrożenie. Usunięte dane w takiej ograniczonej kopii nie są używane do zwykłego przetwarzania.</li>
+<li>Kopie odtworzeniowe bazy zarządzane przez Moonveil podlegają harmonogramowi czyszczenia według wieku i liczby: do 14 dni i nie więcej niż 20 kopii. Są przechowywane w ograniczonym środowisku produkcyjnym i nie służą do zwykłego przetwarzania. Nie polegamy na automatycznych backupach ani snapshotach dostawcy, chyba że zostaną osobno włączone, udokumentowane i objęte tymi samymi zasadami usuwania.</li>
 <li>Logi żądań aplikacyjnych nie mają obecnie limitu czasu wymuszanego przez kod; kontenery produkcyjne rotują je według rozmiaru pliku. Celem operacyjnym jest usuwanie w ciągu 30 dni, chyba że odpowiedni wyciąg jest potrzebny dla udokumentowanego incydentu lub roszczenia.</li>
 <li>Celem polityki dla korespondencji wsparcia jest usunięcie w ciągu 12 miesięcy od zamknięcia. Jest to proces ręczny lub wykonywany na poziomie dostawcy, a nie kontrola wymuszana przez Aplikację. Informacje potrzebne do reklamacji lub roszczenia mogą być przechowane przez właściwy okres przedawnienia.</li>
-<li>Google, Apple, RevenueCat i inni niezależni dostawcy stosują własne zasady retencji do danych, które kontrolują.</li>
+<li>Niezależni dostawcy sklepów, tożsamości i platform stosują własne zasady retencji do danych, które kontrolują.</li>
 </ul>
 
 <h2>10. Bezpieczeństwo</h2>
@@ -170,8 +168,8 @@
 <p>Na zasadach RODO i właściwych przepisów możesz żądać dostępu, sprostowania, usunięcia, ograniczenia, przeniesienia danych, wnieść sprzeciw i w każdej chwili wycofać zgodę. Napisz na <a href="mailto:tealdevmp@gmail.com">tealdevmp@gmail.com</a>. Możemy poprosić o proporcjonalną weryfikację tożsamości. Odpowiadamy bez zbędnej zwłoki, zasadniczo w ciągu miesiąca. Możesz złożyć skargę do organu nadzorczego; w Polsce jest nim Prezes Urzędu Ochrony Danych Osobowych (UODO).</p>
 
 <h2>12. Usunięcie backupu, konta i subskrypcji</h2>
-<p>W ekranie konta możesz usunąć sam backup w chmurze, także po wygaśnięciu Premium. Nie usuwa to konta ani danych lokalnych. Konto możesz usunąć w Aplikacji albo skorzystać z <a href="account-deletion.html">zewnętrznej instrukcji usunięcia</a>. Usunięcie konta obejmuje konto backendowe i tożsamości, opcjonalny backup, zapisy zakupów/uprawnień Moonveil i powiązanego subskrybenta RevenueCat. Po pomyślnym usunięciu konta Aplikacja czyści też lokalną bazę użytkownika.</p>
-<p>Usunięcie backupu lub konta <strong>nie anuluje</strong> aktywnej subskrypcji Google Play ani App Store. Subskrypcję trzeba anulować osobno w odpowiednim koncie sklepu. Samo odinstalowanie Aplikacji nie usuwa konta Moonveil i nie anuluje subskrypcji.</p>
+<p>W ekranie konta możesz usunąć sam backup w chmurze, także po wygaśnięciu Premium. Nie usuwa to konta ani danych lokalnych. Konto możesz usunąć w Aplikacji albo skorzystać z <a href="account-deletion.html">zewnętrznej instrukcji usunięcia</a>. Usunięcie konta obejmuje konto backendowe i tożsamości, opcjonalny backup, zapisy zakupów/uprawnień Moonveil oraz powiązany rekord subskrybenta u dostawcy obsługi zakupów i uprawnień. Po pomyślnym usunięciu konta Aplikacja czyści też lokalną bazę użytkownika.</p>
+<p>Usunięcie backupu lub konta <strong>nie anuluje</strong> aktywnej subskrypcji w sklepie z aplikacjami. Subskrypcję trzeba anulować osobno w odpowiednim koncie sklepu. Samo odinstalowanie Aplikacji nie usuwa konta Moonveil i nie anuluje subskrypcji.</p>
 
 <h2>13. Dzieci</h2>
 <p>Moonveil jest przeznaczony dla osób od 16 roku życia i nie jest kierowany do dzieci. Nie tworzymy świadomie konta dla dziecka poniżej wieku, w którym może ono ważnie wyrazić zgodę na usługę online w swoim kraju. Jeśli uważasz, że dziecko przekazało dane niezgodnie z tą zasadą, skontaktuj się z nami, abyśmy mogli to sprawdzić i w odpowiednim przypadku usunąć dane.</p>

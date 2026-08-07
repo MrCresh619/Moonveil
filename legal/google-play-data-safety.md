@@ -1,8 +1,8 @@
-# Google Play Data safety — Moonveil draft
+# Google Play Data safety — audited working answers
 
-Review date: **23 July 2026**  
+Review date: **7 August 2026**
 Package: `com.tealdev.moonveil`  
-Status: **Provisional — complete from the final Android App Bundle and Google Play SDK Index before submission**
+Status: **Production blocker — the live form inspected on 7 August 2026 incorrectly states that the App collects or shares no data and that data is not encrypted in transit. A corrected draft now records collection, TLS, OAuth account creation and separate data deletion; policy URLs and detailed data types remain intentionally incomplete until PR #2 is merged and the final Android App Bundle/SDK network audit is complete. Do not submit the draft yet.**
 
 Google Play requires declarations for data collected or shared by the App **and every included SDK**. “Collected” generally includes data transmitted off the device, even when it is not retained permanently. Data that remains exclusively on-device is normally outside the collection declaration.
 
@@ -10,10 +10,10 @@ Google Play requires declarations for data collected or shared by the App **and 
 
 | Question | Draft answer | Conditions |
 |---|---|---|
-| Does the App allow users to create an account? | **Yes**, when production auth is enabled. | Guest mode does not remove the requirement once any in-app account creation/sign-in flow exists. |
-| Can users request account deletion in the App? | **Yes.** | `Account → Delete account` calls `DELETE /me`; verify the deployed endpoint and RevenueCat deletion in an end-to-end release test. |
-| Is there an external account deletion resource? | **Yes — `account-deletion.html`.** | Replace placeholders, publish over HTTPS and enter the final URL in Play Console. |
-| Is data encrypted in transit? | **Yes**, provided all production endpoints use HTTPS/TLS. | Verify API, R2/CDN, legal pages and third-party calls. |
+| Does the App allow users to create an account? | **Yes.** | Guest mode does not remove the requirement because an account/sign-in flow exists. |
+| Can users request account deletion in the App? | **Yes.** | `Account → Delete account` calls the deployed `DELETE /me`; retain an end-to-end test of the external purchase-provider deletion. |
+| Is there an external account deletion resource? | **Yes — `account-deletion.html`.** | Enter the canonical HTTPS URL only after PR #2 is merged and the page is reachable. |
+| Is data encrypted in transit? | **Yes.** | The inspected production API and public endpoints use HTTPS/TLS; recheck all destinations in the final AAB. |
 | Can users request deletion of collected data? | **Yes.** | Account deletion plus separate optional-backup deletion. Disclose lawful retention. |
 
 ## Draft data-type mapping
@@ -24,8 +24,8 @@ Google Play requires declarations for data collected or shared by the App **and 
 |---|---|---|---|---|
 | Email address | **Yes, optional** | Optional for guest; may be supplied by Google/Apple account. | App functionality, account management, support, fraud/security. | Store only verified provider email claims. Do not use for marketing without a separate lawful basis. |
 | User IDs | **Yes** | Required for account/purchases; not required for guest-only local use. | App functionality, account management, purchase restore, fraud/security. | Internal Moonveil ID, provider ID and RevenueCat app user ID. |
-| Name | **No by default; Yes only if included in cloud backup.** | Optional. | Cloud backup/restore requested by user. | Profile name remains local in the intended MVP. If backup includes it, declare collection. |
-| Other personal info | **Potentially Yes for cloud backup.** | Optional. | Backup/restore/sync. | Date of birth, spiritual profile or beliefs may fall here. Final backup schema must determine the declaration. |
+| Name | **Yes when included in optional cloud backup.** | Optional and user-initiated. | Cloud backup/restore requested by user. | Local profile data is not transmitted unless the user enables and uploads a backup. |
+| Other personal info | **Yes when included in optional cloud backup.** | Optional and user-initiated. | Backup/restore/sync. | Date of birth, spiritual profile or beliefs can be included in the arbitrary JSON backup payload. |
 
 ### Financial info
 
@@ -38,7 +38,7 @@ Google Play requires declarations for data collected or shared by the App **and 
 
 | Play data type | Collected? | Required/optional | Purpose | Notes |
 |---|---|---|---|---|
-| Other user-generated content | **No by default; Yes if optional cloud backup is shipped.** | Optional and user-initiated. | Cloud backup/restore/sync. | May include readings, notes, journal entries, custom spreads or profile payload. Must be separately disclosed/consented before upload. |
+| Other user-generated content | **Yes when optional cloud backup is used.** | Optional and user-initiated. | Cloud backup/restore/sync. | May include readings, notes, journal entries, custom spreads or profile payload. Each upload has a separate disclosure/consent step. |
 | App interactions / other actions | **Probably No for analytics.** | n/a | n/a | Backend purchase/access events are declared as purchase history. Recheck RevenueCat and Expo SDK collection in the final binary. |
 
 ### Photos and videos / files
@@ -95,7 +95,7 @@ Current product intent: **no sale of data, no advertising and no cross-app track
 
 ## Security/deletion statements
 
-Only answer “Yes” after verifying:
+Before submitting the corrected form, retain evidence that:
 
 - HTTPS/TLS is enforced for all production traffic;
 - credentials and secrets are not logged;
@@ -111,7 +111,7 @@ Only answer “Yes” after verifying:
 2. Export dependency tree and inspect Play SDK Index warnings.
 3. Run the App through sign-in, purchase, restore, backup and deletion while capturing network destinations and payload categories.
 4. Compare the observations with this matrix.
-5. Update Privacy Policy and this file before changing Play Console answers.
+5. Confirm the merged Privacy Policy and account-deletion URLs, then update their Play Console references.
 6. Archive screenshots/export of the submitted Data safety form with the release SHA/version.
 
 ## Official references

@@ -1,6 +1,6 @@
 # Moonveil record of processing activities (ROPA-lite)
 
-Review date: **2 August 2026**
+Review date: **7 August 2026**
 
 Controller: **TealDev Mateusz Pilarski**, ul. Orzechowa 37/17, 21-500 Biała Podlaska, Poland, NIP 5651479302
 
@@ -29,9 +29,9 @@ This internal register is a lightweight Article 30 GDPR working document. Confir
 - **Source:** user and Google/Apple/email provider.
 - **Legal basis:** GDPR Article 6(1)(b); Article 6(1)(f) for security/audit where applicable.
 - **Recipients/processors:** Contabo, Google, Apple, authorised support/admin staff.
-- **International transfers:** document provider-specific adequacy/SCC basis.
+- **International transfers:** document provider-specific adequacy/SCC basis. Contabo hosts the production server in its EU region, but its DPA had not been concluded as of 7 August 2026.
 - **Retention:** account lifetime; delete with account except legal/security hold; restricted backup tail up to 14 days.
-- **Controls:** provider-token verification, JWT, TLS, rate limiting, role restrictions, secret management, audit logs.
+- **Controls:** provider-token verification, JWT, TLS, rate limiting, role restrictions, secret management and audit logs. Provider firewall assignment and database encryption-at-rest evidence were not verified in the 7 August audit.
 
 ## Processing activity 3 — subscriptions, purchases and entitlements
 
@@ -41,9 +41,9 @@ This internal register is a lightweight Article 30 GDPR working document. Confir
 - **Source:** RevenueCat, Google Play, App Store and user-initiated restore/sync.
 - **Legal basis:** Article 6(1)(b) performance of paid service; Article 6(1)(c) accounting/legal obligations; Article 6(1)(f) security, fraud prevention and legal claims.
 - **Recipients/processors:** RevenueCat, Google, Apple, Contabo, authorised staff/advisers.
-- **International transfers:** RevenueCat DPA/SCCs and provider safeguards; record exact contracting entities/data locations.
+- **International transfers:** provider DPA/SCCs and safeguards; record exact contracting entities/data locations. RevenueCat DPA acceptance/archival was not verified in the 7 August audit.
 - **Retention:** account lifetime for operational entitlement records; accounting/transaction records for legally required period; delete non-required account-linked billing/audit data on account deletion.
-- **Controls:** webhook authentication/HMAC, idempotency, transaction boundaries, access audit, limited admin access, no payment-card storage.
+- **Controls:** webhook authentication, idempotency, transaction boundaries, access audit, limited admin access and no payment-card storage. RevenueCat HMAC signing was disabled at the audit and requires coordinated backend configuration before activation.
 
 ## Processing activity 4 — optional cloud backup/restore/sync
 
@@ -54,8 +54,8 @@ This internal register is a lightweight Article 30 GDPR working document. Confir
 - **Legal basis:** Article 6(1)(b) for requested backup service; explicit consent under Article 9(2)(a) where the payload reveals religious/philosophical beliefs or other special-category data.
 - **Recipients/processors:** Contabo; authorised personnel only when necessary for support/security.
 - **International transfers:** production VPS/database are configured in Contabo region EU; provider contractual safeguards apply to any ancillary processing outside the EEA.
-- **Retention:** until user deletes backup/account; Moonveil-managed restricted disaster-recovery backup tail up to 14 days. Contabo Auto Backup and provider snapshots are not enabled as of 2 August 2026.
-- **Controls required:** disabled by default, separate opt-in, explicit-consent record where needed, 5 MB limit, TLS, encryption at rest, least-privilege access, no payload logging, revision conflict protection, delete action available without active Premium.
+- **Retention:** until user deletes backup/account; Moonveil-managed cleanup runs on a schedule and rotates restricted database backups by age (14 days by default) and count (maximum 20 files). Contabo Auto Backup and provider snapshots were not enabled as of 7 August 2026.
+- **Controls:** disabled by default, separate opt-in, explicit-consent record where needed, 5 MB limit, TLS, no payload logging, revision conflict protection and deletion without active Premium are implemented. Encryption-at-rest and least-privilege network evidence remain unverified. Current disaster-recovery copies are on the same VPS and are not an off-site backup.
 - **DPIA:** screening required before production backup launch; owner Mateusz Pilarski; record the signed decision and date in the release evidence.
 
 ## Processing activity 5 — support and privacy requests

@@ -12,25 +12,25 @@
 <p>A successful request deletes the backend account and then signs you out and clears Moonveil's private local user data on that device. If the App reports an error, do not assume deletion is complete: retry or use the email route below.</p>
 
 <h2>Request deletion without the App or device</h2>
-<p>You do not need to reinstall Moonveil. Email <a href="mailto:tealdevmp@gmail.com?subject=Moonveil%20account%20deletion%20request">tealdevmp@gmail.com</a> with the subject “Moonveil account deletion request”. Where possible, send it from the email used for Google or Apple sign-in and include the Moonveil account ID shown in <strong>Account &amp; payments</strong>.</p>
+<p>You do not need to reinstall Moonveil. Email <a href="mailto:tealdevmp@gmail.com?subject=Moonveil%20account%20deletion%20request">tealdevmp@gmail.com</a> with the subject “Moonveil account deletion request”. Where possible, send it from the email used with your sign-in provider and include the Moonveil account ID shown in <strong>Account &amp; payments</strong>.</p>
 <p>Provide only the sign-in email and/or account ID needed to find the account. Do not send a password, access token or identity document unless we explain why additional verification is necessary. We may ask for limited verification so that nobody can delete another person's account.</p>
 <p>We handle a valid request without undue delay and generally within one month. If applicable law allows more time because a request is complex or numerous, we will notify you within the first month.</p>
 
 <h2>What a successful deletion removes</h2>
 <ul>
-<li>the Moonveil backend account, linked Google or Apple sign-in identities and active session on the current device;</li>
+<li>the Moonveil backend account, linked external sign-in identities and active session on the current device;</li>
 <li>the optional Moonveil cloud backup;</li>
 <li>Moonveil's subscription status, entitlements (including one-time deck unlocks), purchase-event metadata and account-linked access logs;</li>
-<li>the Moonveil-to-RevenueCat customer mapping and the associated RevenueCat customer record.</li>
+<li>the Moonveil-to-purchase-entitlement-provider customer mapping and the associated external customer record.</li>
 </ul>
-<p>The backend completes the RevenueCat step before deleting the Moonveil database account. If that external step is unavailable, the deletion request fails instead of silently leaving a partially deleted Moonveil account.</p>
+<p>The backend completes the purchase-entitlement-provider step before deleting the Moonveil database account. If that external step is unavailable, the deletion request fails instead of silently leaving a partially deleted Moonveil account.</p>
 
 <h2>What may remain</h2>
 <ul>
-<li><strong>Store records and subscription:</strong> Google Play or the App Store controls the subscription, transaction and accounting records. Moonveil account deletion does not delete those records or cancel renewal.</li>
+<li><strong>Store records and subscription:</strong> the relevant app store controls the subscription, transaction and accounting records. Moonveil account deletion does not delete those records or cancel renewal.</li>
 <li><strong>Deployment backups:</strong> deleted database rows may remain temporarily in restricted PostgreSQL deployment backups. The current deployment configuration rotates these by age (14 days by default) and count (at most 20 files); deletion reaches those copies through that rotation. Backups are intended for disaster recovery, not ordinary use.</li>
 <li><strong>Deletion-request correspondence:</strong> when you contact us by email, the message and verification case are separate from the App account. Routine closed support records are scheduled for deletion after 12 months unless a legal hold or a legal obligation requires longer retention.</li>
-<li><strong>Device or platform backups:</strong> copies controlled by Apple, Google or the device owner follow their own backup settings and retention.</li>
+<li><strong>Device or platform backups:</strong> copies controlled by the operating-system or device-backup provider, or by the device owner, follow their own backup settings and retention.</li>
 </ul>
 
 <h2>Account, backup, sign-out and subscription are different</h2>
@@ -38,7 +38,7 @@
 <li><strong>Delete account and data</strong> permanently removes the Moonveil backend account and the Moonveil data listed above. It is not the same as cancelling a store subscription.</li>
 <li><strong>Delete cloud backup</strong> removes only the optional backup. In <strong>Account &amp; payments</strong>, select <strong>Delete cloud backup</strong>. The action remains available after Premium expires and does not change data on the device.</li>
 <li><strong>Sign out</strong> keeps the account and cloud backup, but removes the session and private Moonveil user data from that device.</li>
-<li><strong>Cancel subscription</strong> stops future store renewals and normally leaves paid access until the end of the current period. Use Google Play or App Store subscription management. Cancelling does not delete the Moonveil account.</li>
+<li><strong>Cancel subscription</strong> stops future store renewals and normally leaves paid access until the end of the current period. Use the relevant app store's subscription management. Cancelling does not delete the Moonveil account.</li>
 </ul>
 
 <h2>One-time purchases</h2>
@@ -60,25 +60,25 @@
 <p>Po udanym żądaniu konto backendowe zostaje usunięte, a aplikacja wylogowuje użytkownika i czyści prywatne lokalne dane Moonveil na tym urządzeniu. Jeśli aplikacja pokaże błąd, nie zakładaj, że usuwanie się zakończyło: ponów próbę albo skorzystaj ze ścieżki e-mail poniżej.</p>
 
 <h2>Wniosek bez aplikacji lub urządzenia</h2>
-<p>Nie musisz ponownie instalować Moonveil. Wyślij wiadomość na <a href="mailto:tealdevmp@gmail.com?subject=Wniosek%20o%20usuni%C4%99cie%20konta%20Moonveil">tealdevmp@gmail.com</a> z tematem „Wniosek o usunięcie konta Moonveil”. W miarę możliwości użyj adresu użytego do logowania przez Google lub Apple i podaj identyfikator konta Moonveil widoczny w sekcji <strong>Konto i płatności</strong>.</p>
+<p>Nie musisz ponownie instalować Moonveil. Wyślij wiadomość na <a href="mailto:tealdevmp@gmail.com?subject=Wniosek%20o%20usuni%C4%99cie%20konta%20Moonveil">tealdevmp@gmail.com</a> z tematem „Wniosek o usunięcie konta Moonveil”. W miarę możliwości użyj adresu użytego u dostawcy logowania i podaj identyfikator konta Moonveil widoczny w sekcji <strong>Konto i płatności</strong>.</p>
 <p>Podaj wyłącznie adres logowania i/lub identyfikator konta potrzebny do odnalezienia konta. Nie wysyłaj hasła, tokenu dostępu ani dokumentu tożsamości, chyba że wyjaśnimy, dlaczego dodatkowa weryfikacja jest konieczna. Możemy poprosić o ograniczoną weryfikację, aby nikt nie usunął cudzego konta.</p>
 <p>Prawidłowy wniosek realizujemy bez zbędnej zwłoki, co do zasady w ciągu miesiąca. Jeżeli właściwe prawo pozwala na przedłużenie terminu ze względu na złożoność lub liczbę wniosków, poinformujemy o tym w pierwszym miesiącu.</p>
 
 <h2>Co usuwa udana operacja</h2>
 <ul>
-<li>konto backendowe Moonveil, powiązane tożsamości logowania Google lub Apple oraz aktywną sesję na bieżącym urządzeniu;</li>
+<li>konto backendowe Moonveil, powiązane zewnętrzne tożsamości logowania oraz aktywną sesję na bieżącym urządzeniu;</li>
 <li>opcjonalny backup Moonveil w chmurze;</li>
 <li>przechowywany przez Moonveil status subskrypcji, uprawnienia (w tym jednorazowe odblokowania talii), metadane zdarzeń zakupowych i powiązane z kontem logi dostępu;</li>
-<li>powiązanie konta Moonveil z klientem RevenueCat oraz powiązany rekord klienta RevenueCat.</li>
+<li>powiązanie konta Moonveil z klientem dostawcy obsługi uprawnień zakupowych oraz powiązany zewnętrzny rekord klienta.</li>
 </ul>
-<p>Backend kończy operację po stronie RevenueCat przed usunięciem konta z bazy Moonveil. Jeśli ta zewnętrzna operacja jest niedostępna, żądanie kończy się błędem zamiast pozostawić częściowo usunięte konto Moonveil bez ostrzeżenia.</p>
+<p>Backend kończy operację po stronie dostawcy obsługi uprawnień zakupowych przed usunięciem konta z bazy Moonveil. Jeśli ta zewnętrzna operacja jest niedostępna, żądanie kończy się błędem zamiast pozostawić częściowo usunięte konto Moonveil bez ostrzeżenia.</p>
 
 <h2>Co może pozostać</h2>
 <ul>
-<li><strong>Rejestry sklepu i subskrypcja:</strong> Google Play lub App Store kontroluje subskrypcję oraz własne rejestry transakcyjne i księgowe. Usunięcie konta Moonveil nie usuwa tych rejestrów ani nie anuluje odnowienia.</li>
+<li><strong>Rejestry sklepu i subskrypcja:</strong> właściwy sklep z aplikacjami kontroluje subskrypcję oraz własne rejestry transakcyjne i księgowe. Usunięcie konta Moonveil nie usuwa tych rejestrów ani nie anuluje odnowienia.</li>
 <li><strong>Backupy wdrożeniowe:</strong> usunięte rekordy bazy mogą tymczasowo pozostawać w ograniczonych dostępowo backupach wdrożeniowych PostgreSQL. Bieżąca konfiguracja rotuje je według wieku (domyślnie 14 dni) i liczby (maksymalnie 20 plików); usunięcie obejmuje te kopie wraz z rotacją. Backupy służą do odtwarzania awaryjnego, a nie do zwykłego użycia.</li>
 <li><strong>Korespondencja dotycząca wniosku:</strong> wiadomość e-mail i sprawa weryfikacyjna są odrębne od konta w aplikacji. Rutynowe zamknięte sprawy wsparcia są przeznaczone do usunięcia po 12 miesiącach, chyba że obowiązek prawny lub zabezpieczenie roszczeń wymaga dłuższego przechowywania.</li>
-<li><strong>Kopie urządzenia lub platformy:</strong> kopie kontrolowane przez Apple, Google lub właściciela urządzenia podlegają ich własnym ustawieniom i okresom retencji.</li>
+<li><strong>Kopie urządzenia lub platformy:</strong> kopie kontrolowane przez dostawcę systemu operacyjnego lub backupu albo właściciela urządzenia podlegają ich własnym ustawieniom i okresom retencji.</li>
 </ul>
 
 <h2>Konto, backup, wylogowanie i subskrypcja to różne rzeczy</h2>
@@ -86,7 +86,7 @@
 <li><strong>Usuń konto i dane</strong> trwale usuwa konto backendowe Moonveil oraz dane Moonveil wymienione powyżej. Nie jest to równoznaczne z anulowaniem subskrypcji w sklepie.</li>
 <li><strong>Usuń kopię z chmury</strong> usuwa tylko opcjonalny backup. W sekcji <strong>Konto i płatności</strong> wybierz <strong>Usuń kopię z chmury</strong>. Ta akcja pozostaje dostępna po wygaśnięciu Premium i nie zmienia danych na urządzeniu.</li>
 <li><strong>Wyloguj</strong> zachowuje konto i backup w chmurze, ale usuwa sesję i prywatne dane użytkownika Moonveil z tego urządzenia.</li>
-<li><strong>Anuluj subskrypcję</strong> zatrzymuje przyszłe odnowienia w sklepie i zwykle pozostawia płatny dostęp do końca bieżącego okresu. Użyj zarządzania subskrypcjami Google Play lub App Store. Anulowanie nie usuwa konta Moonveil.</li>
+<li><strong>Anuluj subskrypcję</strong> zatrzymuje przyszłe odnowienia w sklepie i zwykle pozostawia płatny dostęp do końca bieżącego okresu. Użyj zarządzania subskrypcjami we właściwym sklepie z aplikacjami. Anulowanie nie usuwa konta Moonveil.</li>
 </ul>
 
 <h2>Zakupy jednorazowe</h2>

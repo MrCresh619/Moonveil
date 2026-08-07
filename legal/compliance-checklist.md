@@ -55,7 +55,7 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [ ] Show a clear pre-upload summary of categories that will leave the device.
 - [x] Add a separate affirmative opt-in; no pre-ticked checkbox or bundled consent.
 - [x] Where backup may include spiritual/journal content revealing beliefs, collect explicit consent suitable for GDPR Article 9.
-- [x] Record consent version, timestamp and scope without putting sensitive content in the consent record.
+- [ ] Align the backup API and persist consent version, timestamp and scope without putting sensitive content in the consent record; the mobile client submits these fields, but the current backend rejects them as non-whitelisted and the model cannot store them.
 - [ ] Allow withdrawal and backup deletion as easily as enabling backup.
 - [ ] Confirm backup deletion works without Premium.
 - [ ] Do not put profile name, birth date, readings, notes or beliefs into RevenueCat attributes, logs or analytics.

@@ -1,6 +1,6 @@
 # Moonveil — verified products, payments and data inventory
 
-Review date: **2 August 2026**
+Review date: **7 August 2026**
 App: **Moonveil – Tarot & Guidance**  
 Mobile package: `com.tealdev.moonveil`
 
@@ -25,7 +25,7 @@ This document records the product and technical facts used to draft the public l
 | Premium module unlock | One-time non-consumable | Per-module product ID and `MODULE_UNLOCK` target key | Access to the identified module without requiring the full subscription. | Backend model supports it. Exact product catalog is not final. |
 | Profile access | Entitlement | RevenueCat identifier `profile` | Save local esoteric profile and full numerology. | Included in monthly premium. |
 | Custom spreads | Entitlement | RevenueCat identifier `custom_spreads` | User-defined tarot spreads. | Included in monthly premium; backend also permits targeted entitlement. |
-| Backup & Export | Entitlement | RevenueCat identifier `backup` | Optional versioned cloud backup of local user payload. | Backend and mobile upload/restore/delete UI are present. Each upload requires an Article 9 opt-in; the backend records consent version and timestamp. Production testing remains required. |
+| Backup & Export | Entitlement | RevenueCat identifier `backup` | Optional versioned cloud backup of local user payload. | Backend and mobile upload/restore/delete UI are present. Each upload requires a separate Article 9 confirmation in the mobile UI. The mobile request includes consent fields that the backend DTO does not allow; with the global `forbidNonWhitelisted` validation this currently rejects the upload instead of persisting the backup or consent evidence. This contract gap must be resolved before production. |
 | Cross-device Sync | Entitlement | RevenueCat identifier `sync` | Versioned restore/sync between devices. | Included in product model; user-facing final flow not yet verified. |
 
 ### Important commercial rules
@@ -39,13 +39,13 @@ This document records the product and technical facts used to draft the public l
 
 ## Implementation status that affects legal statements
 
-| Area | Verified state on 2 August 2026 |
+| Area | Verified state on 7 August 2026 |
 |---|---|
 | Backend account model | Internal user ID, optional email, external provider identity, account status, RevenueCat ID and login timestamps exist in Prisma schema. |
 | Billing | RevenueCat webhook, entitlement mapping, subscriptions, purchase transactions, billing events and audit history were implemented in merged backend PR #71. |
 | Account deletion | Merged backend code exposes `DELETE /me`, deletes linked application records and requests RevenueCat customer deletion; mobile UI calls this endpoint. Deployment and end-to-end evidence remain required. |
-| Cloud backup | Merged backend provides versioned `GET/PUT/DELETE /me/backup`, arbitrary JSON payload and a 5 MB limit. Payload is not end-to-end encrypted by the current code. |
-| Public backend privacy page | Backend `/privacy` links to the canonical GitHub Pages policy; the GitHub Pages document is authoritative. |
+| Cloud backup | Backend provides versioned `GET/PUT/DELETE /me/backup`, arbitrary JSON payload and a 5 MB limit. Payload is not end-to-end encrypted. The current mobile `PUT` includes consent fields rejected by the backend validation contract, so a mobile upload cannot currently complete. |
+| Public backend privacy page | Backend `/privacy` renders a separate, older embedded policy instead of redirecting to the canonical GitHub Pages document. The mobile Privacy Policy link opens this backend route. |
 | Mobile billing SDK | `react-native-purchases` and `react-native-purchases-ui` are present. Purchase, restore, cancellation and expiry must still be tested in the exact store build. |
 | Mobile permissions | Expo image picker and localization packages are present. The final permission manifests and actual feature use must be audited. |
 | Web payments/auth | The reviewed Astro web `package.json` contains no payment, auth, analytics or advertising SDK. |
@@ -63,7 +63,7 @@ This document records the product and technical facts used to draft the public l
 | Profile name and date of birth | Local numerology/profile calculations. | Same as above. |
 | Numerology, zodiac and assigned-stone results | Calculated locally from profile inputs. | Same as above. |
 | Preferences, language and entitlement cache | SQLite/AsyncStorage/local browser storage. | App/browser controls. |
-| User-selected images | Local unless deliberately included in an export/backup feature. | App/device controls. |
+| User-selected images | Image bytes remain local. A custom spread’s local image URI/reference is included in the current database backup payload, but the selected image file is not uploaded. | App/device controls. |
 
 ### Transmitted to or stored by Moonveil/backend
 
@@ -86,7 +86,7 @@ The local profile, journal and readings can reveal religious or philosophical be
 
 Before enabling cloud backup in production:
 
-1. keep the separate, granular opt-in aligned with the version recorded by the backend;
+1. keep the separate, granular opt-in and add a durable backend record of its version, timestamp and scope;
 2. require explicit consent for every upload where Article 9 applies;
 3. keep backup deletion and consent withdrawal available even after Premium expires;
 4. exclude sensitive profile/user content from RevenueCat user attributes and billing metadata;
@@ -99,15 +99,16 @@ Before enabling cloud backup in production:
 - Apple — Sign in with Apple and App Store billing; may be an independent controller for store/account services.
 - RevenueCat — processor for subscriber, purchase and entitlement data under its DPA.
 - Contabo — VPS/backend/PostgreSQL/logs in region EU. Provider Auto Backup is not enabled and no snapshots exist; the 14-day database-backup rotation must be operated and evidenced by Moonveil on the VPS.
-- Cloudflare R2 — delivery/storage of application content assets; confirm whether any personal data is ever stored there.
+- Cloudflare R2 — delivery/storage of application content assets; the current user backup is stored in PostgreSQL, not R2.
 - Expo/650 Industries — EAS build/update infrastructure where enabled; verify runtime data collection and DPA.
 - GitHub Pages — public legal-site hosting; no App account data should be sent.
 
 ## Known launch blockers
 
-- Public operator identity/address, tax ID and monitored email are missing.
+- Confirm that the operator identity, address, tax ID and email published in `privacy.html` exactly match the production store and business records.
+- Mobile opens the backend `/privacy` page, which currently serves a separate stale policy instead of redirecting to the canonical GitHub Pages document.
 - Production deployment and end-to-end evidence for account/RevenueCat deletion are not confirmed.
 - Final RevenueCat SDK/offering and mobile product configuration are not verified.
-- Cloud-backup consent and evidence are implemented; production end-to-end verification remains required.
-- Production jobs/configuration must be verified against the stated 14-day backup, 30-day log and 12-month support retention periods.
+- Cloud-backup confirmation is implemented in the mobile UI, but the backend currently rejects the submitted consent fields as non-whitelisted. Aligning the API contract, persisting durable consent evidence and production end-to-end verification remain required.
+- The 14-day database-backup cleanup currently runs only on deployment, container logs rotate by size rather than time, and the 12-month support target is not application-enforced. Scheduled/time-based controls and evidence are required before these targets can be represented as hard limits.
 - Store privacy declarations must be completed from the final release binary, not only source package files.

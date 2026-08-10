@@ -1,8 +1,8 @@
 # Google Play Data safety — audited working answers
 
-Review date: **7 August 2026**
+Review date: **10 August 2026**
 Package: `com.tealdev.moonveil`  
-Status: **Production blocker — the live form inspected on 7 August 2026 incorrectly states that the App collects or shares no data and that data is not encrypted in transit. A corrected draft now records collection, TLS, OAuth account creation and separate data deletion; policy URLs and detailed data types remain intentionally incomplete until PR #2 is merged and the final Android App Bundle/SDK network audit is complete. Do not submit the draft yet.**
+Status: **Production blocker — the live form inspected on 7 August 2026 still requires replacement. A corrected draft now records collection, TLS, OAuth account creation, separate data deletion and the final public account/data-deletion URLs. The exact Privacy Policy URL is also saved in Play Console. Detailed data types remain intentionally incomplete until the final Android App Bundle/SDK network audit is complete. Do not submit the draft yet.**
 
 Google Play requires declarations for data collected or shared by the App **and every included SDK**. “Collected” generally includes data transmitted off the device, even when it is not retained permanently. Data that remains exclusively on-device is normally outside the collection declaration.
 
@@ -12,7 +12,7 @@ Google Play requires declarations for data collected or shared by the App **and 
 |---|---|---|
 | Does the App allow users to create an account? | **Yes.** | Guest mode does not remove the requirement because an account/sign-in flow exists. |
 | Can users request account deletion in the App? | **Yes.** | `Account → Delete account` calls the deployed `DELETE /me`; retain an end-to-end test of the external purchase-provider deletion. |
-| Is there an external account deletion resource? | **Yes — `account-deletion.html`.** | Enter the canonical HTTPS URL only after PR #2 is merged and the page is reachable. |
+| Is there an external account deletion resource? | **Yes — `https://mrcresh619.github.io/Moonveil/account-deletion.html`.** | Entered in the corrected draft for both account deletion and separate data deletion on 10 August 2026. |
 | Is data encrypted in transit? | **Yes.** | The inspected production API and public endpoints use HTTPS/TLS; recheck all destinations in the final AAB. |
 | Can users request deletion of collected data? | **Yes.** | Account deletion plus separate optional-backup deletion. Disclose lawful retention. |
 
@@ -111,7 +111,7 @@ Before submitting the corrected form, retain evidence that:
 2. Export dependency tree and inspect Play SDK Index warnings.
 3. Run the App through sign-in, purchase, restore, backup and deletion while capturing network destinations and payload categories.
 4. Compare the observations with this matrix.
-5. Confirm the merged Privacy Policy and account-deletion URLs, then update their Play Console references.
+5. Reconfirm the merged Privacy Policy and account-deletion URLs already entered in Play Console.
 6. Archive screenshots/export of the submitted Data safety form with the release SHA/version.
 
 ## Official references

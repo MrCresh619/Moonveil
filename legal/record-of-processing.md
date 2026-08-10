@@ -1,6 +1,6 @@
 # Moonveil record of processing activities (ROPA-lite)
 
-Review date: **7 August 2026**
+Review date: **10 August 2026**
 
 Controller: **TealDev Mateusz Pilarski**, ul. Orzechowa 37/17, 21-500 Biała Podlaska, Poland, NIP 5651479302
 
@@ -29,9 +29,9 @@ This internal register is a lightweight Article 30 GDPR working document. Confir
 - **Source:** user and Google/Apple/email provider.
 - **Legal basis:** GDPR Article 6(1)(b); Article 6(1)(f) for security/audit where applicable.
 - **Recipients/processors:** Contabo, Google, Apple, authorised support/admin staff.
-- **International transfers:** document provider-specific adequacy/SCC basis. Contabo hosts the production server in its EU region, but its DPA had not been concluded as of 7 August 2026.
+- **International transfers:** document provider-specific adequacy/SCC basis. Contabo hosts the production server in its EU region; the production-VPS DPA became active on 10 August 2026 and must be archived privately.
 - **Retention:** account lifetime; delete with account except legal/security hold; restricted backup tail up to 14 days.
-- **Controls:** provider-token verification, JWT, TLS, rate limiting, role restrictions, secret management and audit logs. Provider firewall assignment and database encryption-at-rest evidence were not verified in the 7 August audit.
+- **Controls:** provider-token verification, JWT, TLS, rate limiting, role restrictions, secret management and audit logs. A Contabo inbound firewall restricts traffic to TCP 22/80/443 and UDP 443 before a default drop rule. Database encryption-at-rest evidence remains to be retained.
 
 ## Processing activity 3 — subscriptions, purchases and entitlements
 
@@ -52,10 +52,10 @@ This internal register is a lightweight Article 30 GDPR working document. Confir
 - **Data:** arbitrary user-selected JSON backup payload, schema version, revision and timestamp; payload may contain readings, notes, profile name/date of birth and spiritual content.
 - **Source:** user device.
 - **Legal basis:** Article 6(1)(b) for requested backup service; explicit consent under Article 9(2)(a) where the payload reveals religious/philosophical beliefs or other special-category data.
-- **Recipients/processors:** Contabo; authorised personnel only when necessary for support/security.
-- **International transfers:** production VPS/database are configured in Contabo region EU; provider contractual safeguards apply to any ancillary processing outside the EEA.
-- **Retention:** until user deletes backup/account; Moonveil-managed cleanup runs on a schedule and rotates restricted database backups by age (14 days by default) and count (maximum 20 files). Contabo Auto Backup and provider snapshots were not enabled as of 7 August 2026.
-- **Controls:** disabled by default, separate opt-in, explicit-consent record where needed, 5 MB limit, TLS, no payload logging, revision conflict protection and deletion without active Premium are implemented. Encryption-at-rest and least-privilege network evidence remain unverified. Current disaster-recovery copies are on the same VPS and are not an off-site backup.
+- **Recipients/processors:** Contabo and Cloudflare R2 for encrypted disaster-recovery copies; authorised personnel only when necessary for support/security.
+- **International transfers:** production VPS/database are configured in Contabo region EU. Encrypted restic disaster-recovery objects are stored in a private Cloudflare R2 bucket with an Eastern Europe location hint; provider contractual safeguards apply to ancillary processing outside the EEA.
+- **Retention:** until user deletes backup/account; Moonveil-managed cleanup rotates restricted local database copies by age/count and encrypted off-site restic snapshots after 14 days. Contabo Auto Backup and provider snapshots remain disabled.
+- **Controls:** disabled by default, separate opt-in, explicit-consent record where needed, 5 MB limit, TLS, no payload logging, revision conflict protection and deletion without active Premium are implemented. The private off-site repository is encrypted and authenticated by restic, uses bucket-scoped R2 credentials and is not publicly accessible. A non-destructive restore/integrity test remains required as retained evidence.
 - **DPIA:** screening required before production backup launch; owner Mateusz Pilarski; record the signed decision and date in the release evidence.
 
 ## Processing activity 5 — support and privacy requests

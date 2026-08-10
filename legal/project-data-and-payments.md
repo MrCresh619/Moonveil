@@ -1,6 +1,6 @@
 # Moonveil — verified products, payments and data inventory
 
-Review date: **7 August 2026**
+Review date: **10 August 2026**
 App: **Moonveil – Tarot & Guidance**  
 Mobile package: `com.tealdev.moonveil`
 
@@ -44,8 +44,8 @@ This document records the product and technical facts used to draft the public l
 | Backend account model | Internal user ID, optional email, external provider identity, account status, RevenueCat ID and login timestamps exist in Prisma schema. |
 | Billing | RevenueCat webhook, entitlement mapping, subscriptions, purchase transactions, billing events and audit history were implemented in merged backend PR #71. |
 | Account deletion | Production deployment exposes `DELETE /me`, deletes linked application records and requests RevenueCat customer deletion; mobile UI calls this endpoint. End-to-end release evidence remains required. |
-| Cloud backup | Production backend provides versioned `GET/PUT/DELETE /me/backup`, arbitrary JSON payload, a 5 MB limit and consent-evidence fields. Payload is not end-to-end encrypted. Scheduled cleanup rotates restricted database copies by age (14 days by default) and count (maximum 20), on the same VPS. |
-| Public policy references | Live store/OAuth references still point to the pre-merge policy location. Per release plan, update them only after PR #2 is merged and the canonical pages are reachable. |
+| Cloud backup | Production backend provides versioned `GET/PUT/DELETE /me/backup`, arbitrary JSON payload, a 5 MB limit and consent-evidence fields. Payload is not end-to-end encrypted in the App. Scheduled cleanup rotates restricted local database copies; daily restic snapshots are encrypted before upload to a dedicated private off-site R2 bucket and expire after 14 days. |
+| Public policy references | PR #2 is merged, the canonical public pages are reachable, and Google Play now references the exact Privacy Policy URL. The corrected Data safety draft contains the final account- and separate-data-deletion URL. |
 | Mobile billing SDK | `react-native-purchases` and `react-native-purchases-ui` are present. Purchase, restore, cancellation and expiry must still be tested in the exact store build. |
 | Mobile permissions | Expo image picker and localization packages are present. The final permission manifests and actual feature use must be audited. |
 | Web payments/auth | The reviewed Astro web `package.json` contains no payment, auth, analytics or advertising SDK. |
@@ -98,17 +98,17 @@ Before enabling cloud backup in production:
 - Google — Google Sign-In and Google Play billing; may be an independent controller for store/account services.
 - Apple — Sign in with Apple and App Store billing; may be an independent controller for store/account services.
 - RevenueCat — processor for subscriber, purchase and entitlement data. Subscriber deletion is implemented; DPA acceptance/archival was not verified. The live offering has monthly and annual packages and no published paywall.
-- Contabo — VPS/backend/PostgreSQL/logs in region EU. No Contabo DPA was concluded as of 7 August 2026. Provider Auto Backup is not enabled, no snapshots exist and no provider firewall is assigned. Moonveil rotates restricted database copies on the same VPS; this is not an off-site backup.
-- Cloudflare R2 — delivery/storage of application content assets; the current user backup is stored in PostgreSQL, not R2.
+- Contabo — VPS/backend/PostgreSQL/logs in region EU. The production-VPS DPA became active on 10 August 2026. Provider Auto Backup remains disabled. A port plan and default-drop provider firewall are active; local database copies remain restricted and rotated.
+- Cloudflare R2 — delivery/storage of application content assets plus a separate private bucket containing restic-encrypted production database disaster-recovery snapshots. The live optional user backup remains in PostgreSQL; R2 receives only the encrypted database-copy repository.
 - Expo/650 Industries — EAS build/update infrastructure where enabled; verify runtime data collection and DPA.
 - GitHub Pages — public legal-site hosting; no App account data should be sent.
 
 ## Known launch blockers
 
 - Confirm that the operator identity, address, tax ID and email published in `privacy.html` exactly match the production store and business records.
-- Google Play's live Data safety form incorrectly says the App collects/shares no data and that data is not encrypted in transit. A corrected draft now records collection, TLS, OAuth and separate backup deletion; complete data types and policy URLs after merge/final-AAB audit, then submit before production rollout.
-- Contabo DPA is not concluded. No provider firewall or off-site backup is configured; close these through an approved access/port and recovery plan rather than an unreviewed console change.
-- Google OAuth remains in Testing and its Android SHA-1 does not match Play App Signing. Policy/homepage links must be updated only after PR #2 is merged.
+- Google Play's live Data safety form still requires replacement. The corrected draft now records collection, TLS, OAuth, separate deletion and final policy/deletion URLs; complete detailed data types after the final-AAB/SDK audit, then submit before production rollout.
+- The Contabo DPA, firewall and encrypted off-site backup are configured. Archive the DPA privately and retain a successful non-destructive restore/integrity test.
+- Google OAuth remains in Testing and its Android SHA-1 does not match Play App Signing. The merged public policy URLs are now ready for the remaining OAuth configuration update.
 - RevenueCat has no published paywall and no live lifetime package. Confirm the intended purchase UI and run end-to-end billing, restore and deletion tests.
 - Production end-to-end evidence for account/purchase-provider deletion and backup consent/restore/delete is still required.
 - Container log rotation, the 12-month support target and database-backup restore behaviour require retained operational evidence.

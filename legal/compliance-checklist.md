@@ -15,7 +15,7 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [ ] Create monitored `support` and `privacy` email addresses.
 - [x] Set the effective date and version for each public document.
 - [x] Publish the pages on a stable HTTPS URL with no login, geoblocking or editable-document UI.
-- [ ] Link Privacy Policy, Terms and Account Deletion from the App settings/paywall/account screens.
+- [x] Link Privacy Policy, Terms and Account Deletion from the App settings/paywall/account screens.
 - [x] Put the canonical privacy URL in Google Play Console.
 - [ ] Put the canonical privacy URL in App Store Connect before the iOS release.
 - [x] Remove the old claim that “no data leaves the device”; it is incompatible with accounts, purchase processing and backup.
@@ -25,14 +25,14 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [x] Merge backend account deletion equivalent to backend PR #75.
 - [x] Deploy the account-deletion endpoint and external purchase-provider deletion request.
 - [ ] Test account deletion end-to-end, including external customer deletion and failure behaviour, and retain evidence.
-- [ ] Confirm deletion removes account identities, optional backup, Moonveil billing metadata, audit history and the RevenueCat subscriber.
+- [x] Confirm in code and automated tests that deletion removes account identities, optional backup, Moonveil billing metadata, audit history and the RevenueCat subscriber. A real disposable-account test remains required.
 - [ ] Add an easy-to-find in-app path: `Settings/Account → Delete account`.
-- [ ] Add a separate delete-backup action that remains available after Premium expires.
+- [x] Add a separate delete-backup action that remains available after Premium expires.
 - [ ] Keep the external deletion URL functional for users who uninstalled or cannot sign in.
 - [ ] Verify identity without collecting excessive data.
 - [x] Clearly state that account deletion does not cancel Google Play/App Store subscriptions.
 - [ ] Test deletion for Google, Apple, email and anonymous-upgraded accounts.
-- [ ] Test retries and partial failures when RevenueCat is unavailable.
+- [x] Test retries and partial failures when RevenueCat is unavailable.
 - [ ] Define how deletion is propagated to disaster-recovery backups.
 
 ### Billing and product configuration
@@ -43,9 +43,9 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [ ] Do not expose or advertise a lifetime package unless a live store product and reviewed purchase screen are added.
 - [ ] Create the equivalent App Store subscription product and subscription group before iOS launch.
 - [x] Configure the RevenueCat entitlement `premium` and live monthly/annual offering mappings.
-- [ ] Publish and test the intended paywall/purchase screen; no RevenueCat paywall was published at audit time.
-- [ ] Verify identifiers for `profile`, `custom_spreads`, `backup` and `sync` or simplify to one canonical premium entitlement.
-- [ ] Define every one-time deck/module product ID and target key before sale.
+- [x] Publish RevenueCat paywall `wf3a25160e977b42a9` with the canonical Privacy Policy and Terms links. Final store purchase on a tester account remains required.
+- [x] Limit the current advertised Premium benefit to the saved owner profile and personal/name numerology. Do not market `custom_spreads`, `backup` or `sync` as current Premium benefits.
+- [ ] Define every one-time deck product ID and target key before sale; modules are outside the current release scope.
 - [ ] Ensure a one-time deck purchase does not accidentally require an active subscription.
 - [ ] Verify purchase, renewal, cancellation, grace period, expiry, refund/revocation, restore, reinstall and account-switch flows.
 - [ ] Test duplicate/alias RevenueCat app-user IDs and guest-to-account migration.
@@ -62,7 +62,7 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [x] Where backup may include spiritual/journal content revealing beliefs, collect explicit consent suitable for GDPR Article 9.
 - [x] Align the deployed backup API and persist consent version, timestamp and scope without putting sensitive content in the consent record.
 - [ ] Allow withdrawal and backup deletion as easily as enabling backup.
-- [ ] Confirm backup deletion works without Premium.
+- [x] Confirm in automated tests that backup deletion works without Premium.
 - [ ] Do not put profile name, birth date, readings, notes or beliefs into RevenueCat attributes, logs or analytics.
 - [ ] Decide whether the backup payload should be client-side/end-to-end encrypted. If not, disclose that clearly and harden server-side encryption/access.
 - [ ] Complete a documented DPIA screening; perform a DPIA if high-risk processing criteria are met.
@@ -109,19 +109,21 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 
 ## Google Play Console
 
+- [x] Remove the Google Play tag `Horoskopy`; current tags are `Samorozwój` and `Styl życia` (13 August 2026).
+
 - [x] Provide a public Privacy Policy URL that names Moonveil and the legal operator.
 - [x] Enter the external account-deletion and separate-data-deletion URLs in the corrected Data safety draft.
-- [ ] Publish the external deletion link by completing and submitting the final Data safety form after the final-AAB audit.
+- [x] Publish the external deletion link and submit the corrected Data safety form on 11 August 2026.
 - [ ] Complete all account-deletion questions.
-- [ ] **Blocker:** replace the live Data safety form, which still reflects the old declaration. The corrected draft now records collection, TLS, OAuth, account deletion, separate data deletion and final public URLs; complete detailed data types after the final-AAB/SDK audit, then submit.
-- [ ] Reconcile the Data safety form with `legal/google-play-data-safety.md`.
+- [x] Replace and submit the Data safety form with collection, TLS, OAuth, account deletion, separate data deletion and final public URLs. Google review is pending.
+- [x] Reconcile the submitted Data safety form with `legal/google-play-data-safety.md`.
 - [ ] Declare collection of account user IDs, optional email and purchase history where applicable.
 - [ ] Declare optional cloud-backup user content only if the feature is in the submitted build.
 - [ ] Verify whether RevenueCat/Expo/store SDKs require Device or other IDs, diagnostics or app-activity declarations.
 - [ ] Confirm data is encrypted in transit.
 - [ ] Confirm deletion is available in-app and externally.
 - [x] Configure the inspected Play subscription product with monthly and annual base plans and RevenueCat packages.
-- [ ] Add clear subscription/paywall copy and screenshots for review.
+- [x] Add clear subscription/paywall copy. Archive final Play/RevenueCat screenshots with release evidence.
 - [ ] Test through closed testing with licensed testers and real Play Billing test products.
 - [ ] Ensure the developer profile’s public legal identity/contact is correct.
 
@@ -130,17 +132,17 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [ ] Provide the Privacy Policy URL and support URL.
 - [ ] Complete App Privacy labels using the final archive and every SDK.
 - [ ] Reconcile the label with `legal/apple-app-privacy.md`.
-- [ ] Implement in-app account deletion before submitting a build that supports account creation.
+- [x] Implement in-app account deletion before submitting a build that supports account creation.
 - [ ] Configure Sign in with Apple if another third-party login is offered and Apple’s rules require it.
 - [ ] Create the subscription group and auto-renewing product.
 - [ ] Display subscription title, duration, price, renewal and links to Privacy Policy/Terms on the purchase screen.
 - [ ] Add restore-purchases and manage-subscription flows.
-- [ ] Verify one-time non-consumable deck/module products restore correctly.
+- [ ] Verify one-time non-consumable deck products restore correctly; modules are not part of this release.
 - [ ] Confirm export-compliance/encryption declarations.
 
 ## Consumer-law and commercial terms
 
-- [ ] Ensure the paywall accurately describes what Free, Premium and each one-time product unlocks.
+- [x] Ensure the published paywall and Terms describe the current Free/Premium scope; one-time decks are described separately.
 - [ ] Do not advertise features that are only planned.
 - [ ] Display the final total store price and billing frequency before purchase.
 - [ ] Ensure trials state eligibility, duration, post-trial price and auto-renewal.
@@ -173,9 +175,9 @@ This is an implementation checklist, not a legal opinion. Obtain a final review 
 - [x] Verify the final public legal URLs after PR #2 and update the Google Play privacy/deletion references.
 - [ ] Archive final legal-page and Google Play declaration screenshots with the release evidence.
 - [ ] Version/hash of Terms and Privacy accepted by each account where acceptance is required.
-- [ ] Google Data safety submission export/screenshots.
+- [ ] Google Data safety submission export/screenshots (form submitted 11 August 2026; retain the final reviewed-state export).
 - [ ] Apple App Privacy submission screenshots.
-- [ ] RevenueCat product/entitlement/offering screenshots.
+- [ ] RevenueCat product/entitlement/offering screenshots (paywall published; retain final evidence).
 - [ ] Play/App Store product configuration screenshots.
 - [ ] Deletion and restore test evidence.
 - [ ] DPIA screening and legitimate-interest assessments.

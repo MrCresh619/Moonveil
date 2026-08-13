@@ -1,8 +1,8 @@
-# Google Play Data safety — audited working answers
+# Google Play Data safety — submitted declaration and release evidence
 
 Review date: **10 August 2026**
 Package: `com.tealdev.moonveil`  
-Status: **Production blocker — the live form inspected on 7 August 2026 still requires replacement. A corrected draft now records collection, TLS, OAuth account creation, separate data deletion and the final public account/data-deletion URLs. The exact Privacy Policy URL is also saved in Play Console. Detailed data types remain intentionally incomplete until the final Android App Bundle/SDK network audit is complete. Do not submit the draft yet.**
+Status: **Submitted to Google Play review on 11 August 2026. The form declares collection, HTTPS/TLS, OAuth account creation, in-app and external account deletion, separate optional-backup deletion, and the final public policy/deletion URLs. Google Play review is pending. Re-audit before release if the AAB, SDKs, backend processing or providers change.**
 
 Google Play requires declarations for data collected or shared by the App **and every included SDK**. “Collected” generally includes data transmitted off the device, even when it is not retained permanently. Data that remains exclusively on-device is normally outside the collection declaration.
 
@@ -39,7 +39,7 @@ Google Play requires declarations for data collected or shared by the App **and 
 | Play data type | Collected? | Required/optional | Purpose | Notes |
 |---|---|---|---|---|
 | Other user-generated content | **Yes when optional cloud backup is used.** | Optional and user-initiated. | Cloud backup/restore/sync. | May include readings, notes, journal entries, custom spreads or profile payload. Each upload has a separate disclosure/consent step. |
-| App interactions / other actions | **Probably No for analytics.** | n/a | n/a | Backend purchase/access events are declared as purchase history. Recheck RevenueCat and Expo SDK collection in the final binary. |
+| App interactions / other actions | **Yes.** | Optional where applicable. | App functionality and account/purchase operation. | The submitted form includes App interactions/other user actions. No behavioural advertising or cross-app tracking is used. |
 
 ### Photos and videos / files
 
@@ -53,7 +53,7 @@ Google Play requires declarations for data collected or shared by the App **and 
 | Play data type | Collected? | Draft answer |
 |---|---|---|
 | Crash logs | **No known first-party collection.** | No Firebase/Sentry dependency was found in the reviewed package file. Verify Expo and native release dependencies. |
-| Diagnostics | **Potentially Yes.** | Standard backend error/security logs may include technical diagnostics. Determine whether the form’s definition is met and whether Expo/RevenueCat sends diagnostics. |
+| Diagnostics | **Yes.** | Standard backend error/security logs and release SDK traffic may include technical diagnostics needed for reliability and security. |
 | Other app performance data | **No known collection.** | Recheck final SDKs. |
 
 ### Device or other IDs
@@ -95,24 +95,24 @@ Current product intent: **no sale of data, no advertising and no cross-app track
 
 ## Security/deletion statements
 
-Before submitting the corrected form, retain evidence that:
+Evidence retained for the submitted form and still required for rollout:
 
 - HTTPS/TLS is enforced for all production traffic;
 - credentials and secrets are not logged;
 - account deletion works in-app and externally;
-- RevenueCat subscriber deletion is retried safely;
+- RevenueCat subscriber deletion is retried safely in automated backend tests; retain one real disposable-account test;
 - cloud backup can be deleted without Premium;
 - backup/log retention matches the public policy;
 - no sensitive backup content is placed in RevenueCat attributes or analytics.
 
-## Final submission procedure
+## Submitted configuration and remaining rollout evidence
 
 1. Build the exact production AAB.
-2. Export dependency tree and inspect Play SDK Index warnings.
-3. Run the App through sign-in, purchase, restore, backup and deletion while capturing network destinations and payload categories.
+2. Final AAB audited: version 1.2.8, versionCode 12, package `com.tealdev.moonveil`; retain the dependency tree and Play SDK Index result with the release archive.
+3. Before rollout, run the installed Internal Testing build through sign-in, purchase, restore, backup and deletion while capturing destinations and results.
 4. Compare the observations with this matrix.
 5. Reconfirm the merged Privacy Policy and account-deletion URLs already entered in Play Console.
-6. Archive screenshots/export of the submitted Data safety form with the release SHA/version.
+6. Archive the submitted Data safety screenshots/export with AAB 1.2.8 (12) and the legal-content commit recorded in `release-legal-checklist-1.2.8.md`.
 
 ## Official references
 

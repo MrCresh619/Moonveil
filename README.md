@@ -1,6 +1,6 @@
 # Moonveil legal and compliance
 
-This repository hosts the public legal pages and the internal compliance documentation for **Moonveil – Tarot & Guidance** (`com.tealdev.moonveil`).
+This repository hosts the public legal pages and the internal compliance documentation for **Moonveil – Tarot & Numerology** (`com.tealdev.moonveil`).
 
 ## Public pages
 
@@ -14,7 +14,8 @@ This repository hosts the public legal pages and the internal compliance documen
 
 - `legal/project-data-and-payments.md` — verified project inventory: products, payments, data and services
 - `legal/compliance-checklist.md` — launch blockers and store/legal checklist
-- `legal/google-play-data-safety.md` — audited Google Play Data safety working answers
+- `legal/google-play-data-safety.md` — submitted Google Play Data safety declaration and release evidence
+- `legal/release-legal-checklist-1.2.8.md` — AAB/legal release checklist
 - `legal/apple-app-privacy.md` — audited App Store privacy label mapping
 - `legal/record-of-processing.md` — lightweight GDPR record of processing activities
 - `legal/subprocessors.md` — processor and third-party register

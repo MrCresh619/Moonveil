@@ -24,7 +24,7 @@ Canonical public URLs:
 
 ## Required before production rollout
 
-- [ ] Remove the Google Play store tag **Horoscopes / Horoskopy** and retain a screenshot.
+- [x] Remove the Google Play store tag **Horoscopes / Horoskopy**. Verified in Play Console on 13 August 2026; current tags: **Samorozwój**, **Styl życia**.
 - [ ] Install AAB 1.2.8 (12) through Google Play Internal Testing on a physical device.
 - [ ] On that installed build, open every Privacy Policy, Terms, support and account-deletion link.
 - [ ] Using one disposable tester account, verify: create/sign in → RevenueCat subscriber exists → delete in App → backend account and RevenueCat subscriber are removed → signing in again creates a new clean account.

@@ -27,7 +27,7 @@
 <h2>3. Data processed when you use online features</h2>
 <table>
 <tr><th>Category</th><th>Data</th><th>When</th></tr>
-<tr><td>Account and authentication</td><td>Moonveil user ID, sign-in provider and provider ID, optional verified email address, account status, login time and account creation/update times.</td><td>When you create or use an account. Moonveil does not receive the password used with an external sign-in provider.</td></tr>
+<tr><td>Account and authentication</td><td>Moonveil user ID, sign-in provider and provider ID, optional verified email address, and basic profile information returned by the provider (such as name and profile image, where available), account status, login time and account creation/update times.</td><td>When you create or use an account. Moonveil does not receive the password used with an external sign-in provider.</td></tr>
 <tr><td>Purchases and access</td><td>RevenueCat App User ID, store, product and entitlement identifiers, subscription status, purchase, renewal, cancellation, refund and restore events, relevant dates, price/currency metadata and access audit records.</td><td>When you view or use purchase, subscription, restore or paid-access features. The relevant app store processes payment credentials; Moonveil does not receive your full payment-card number.</td></tr>
 <tr><td>Optional cloud backup</td><td>A JSON copy of the local profile, custom spreads and slots, readings and cards, and notes; backup schema version, revision and timestamps. The current upload limit is 5 MB.</td><td>Only after you are signed in and confirm a backup upload. A successfully saved backup is stored in Moonveil's private production database, not in the public content/object-storage service.</td></tr>
 <tr><td>Support and rights requests</td><td>Email address, message, attachments and any information you choose to provide.</td><td>When you contact us.</td></tr>
@@ -51,7 +51,7 @@
 <h2>6. Recipients and service providers</h2>
 <p>Only the following categories of recipients receive data needed for the relevant feature:</p>
 <ul>
-<li><strong>identity, operating-system and app-store providers</strong> – sign-in, platform services, store billing and transaction records;</li>
+<li><strong>identity providers (including Google), operating-system and app-store providers</strong> – sign-in, basic identity information made available by the provider, platform services, store billing and transaction records;</li>
 <li><strong>RevenueCat, Inc. (purchase and entitlement service provider)</strong> – subscription status, purchase restoration and paid-access management;</li>
 <li><strong>production cloud, VPS and database providers</strong> – the Moonveil API, account and billing database, optional backup, operational logs and recovery copies;</li>
 <li><strong>content-delivery, object-storage, DNS and security providers</strong> – public application assets and network protection; optional user backups are not stored in public content storage;</li>
@@ -110,7 +110,7 @@
 <h2>3. Dane przetwarzane przy funkcjach online</h2>
 <table>
 <tr><th>Kategoria</th><th>Dane</th><th>Kiedy</th></tr>
-<tr><td>Konto i logowanie</td><td>Identyfikator użytkownika Moonveil, dostawca logowania i identyfikator u tego dostawcy, opcjonalny zweryfikowany adres e-mail, status konta, czas logowania oraz czas utworzenia/aktualizacji konta.</td><td>Po utworzeniu lub użyciu konta. Moonveil nie otrzymuje hasła używanego u zewnętrznego dostawcy logowania.</td></tr>
+<tr><td>Konto i logowanie</td><td>Identyfikator użytkownika Moonveil, dostawca logowania i identyfikator u tego dostawcy, opcjonalny zweryfikowany adres e-mail oraz podstawowe dane profilu zwrócone przez dostawcę (np. imię i zdjęcie profilowe, jeśli są dostępne), status konta, czas logowania oraz czas utworzenia/aktualizacji konta.</td><td>Po utworzeniu lub użyciu konta. Moonveil nie otrzymuje hasła używanego u zewnętrznego dostawcy logowania.</td></tr>
 <tr><td>Zakupy i dostęp</td><td>Identyfikator użytkownika w usłudze zakupów, sklep, identyfikatory produktu i uprawnień, status subskrypcji, zdarzenia zakupu, odnowienia, anulowania, zwrotu i przywrócenia, odpowiednie daty, dane ceny/waluty oraz historia audytu dostępu.</td><td>Przy użyciu funkcji zakupu, subskrypcji, restore lub płatnego dostępu. Dane płatnicze obsługuje odpowiedni sklep z aplikacjami; Moonveil nie otrzymuje pełnego numeru karty.</td></tr>
 <tr><td>Opcjonalny backup w chmurze</td><td>Kopia JSON lokalnego profilu, własnych rozkładów i pozycji, odczytów i kart oraz notatek; wersja schematu, rewizja i znaczniki czasu. Obecny limit wysyłki to 5 MB.</td><td>Tylko po zalogowaniu i potwierdzeniu wysłania backupu. Pomyślnie zapisany backup jest przechowywany w prywatnej produkcyjnej bazie Moonveil, a nie w publicznej usłudze przechowywania treści.</td></tr>
 <tr><td>Pomoc i realizacja praw</td><td>Adres e-mail, wiadomość, załączniki i dobrowolnie podane informacje.</td><td>Gdy kontaktujesz się z nami.</td></tr>
@@ -134,7 +134,7 @@
 <h2>6. Odbiorcy i dostawcy usług</h2>
 <p>Odpowiednie dane otrzymują wyłącznie następujące kategorie odbiorców potrzebne do obsługi danej funkcji:</p>
 <ul>
-<li><strong>dostawcy tożsamości, systemu operacyjnego i sklepów z aplikacjami</strong> – logowanie, usługi platformowe, płatności sklepowe i rejestry transakcji;</li>
+<li><strong>dostawcy tożsamości (w tym Google), systemu operacyjnego i sklepów z aplikacjami</strong> – logowanie, podstawowe dane tożsamości udostępnione przez dostawcę, usługi platformowe, płatności sklepowe i rejestry transakcji;</li>
 <li><strong>RevenueCat, Inc. (dostawca obsługi zakupów i uprawnień)</strong> – status subskrypcji, przywracanie zakupów i zarządzanie płatnym dostępem;</li>
 <li><strong>dostawcy chmury produkcyjnej, VPS i bazy danych</strong> – API Moonveil, baza kont i rozliczeń, opcjonalny backup, logi operacyjne i kopie awaryjne;</li>
 <li><strong>dostawcy dostarczania treści, storage obiektowego, DNS i bezpieczeństwa</strong> – publiczne zasoby Aplikacji i ochrona sieciowa; backup użytkownika nie jest przechowywany w publicznym storage treści;</li>

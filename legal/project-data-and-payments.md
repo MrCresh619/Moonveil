@@ -1,7 +1,7 @@
 # Moonveil — verified products, payments and data inventory
 
 Review date: **10 August 2026**
-App: **Moonveil – Tarot & Guidance**  
+App: **Moonveil – Tarot & Numerology**  
 Mobile package: `com.tealdev.moonveil`
 
 This document records the product and technical facts used to draft the public legal pages. It must be updated whenever the released code, SDK set, store products or hosting changes.
@@ -18,15 +18,15 @@ This document records the product and technical facts used to draft the public l
 | Product/access | Type | Technical identifier | Current intended scope | Status |
 |---|---|---|---|---|
 | Guest / Free | Free | n/a | App without account, basic tarot guide, basic spreads/readings, selected free content and premium previews. | Product decision accepted. |
-| Moonveil Premium Monthly | Auto-renewing subscription | Play product `moonveil_premium_monthly`, base plan `monthly`; RevenueCat package `$rc_monthly`, entitlement `premium` | Premium access billed monthly. | Present in the live RevenueCat offering; end-to-end store test remains required. |
-| Moonveil Premium Annual | Auto-renewing subscription | Play product `moonveil_premium_monthly`, base plan `annual`; RevenueCat package `$rc_annual`, entitlement `premium` | Premium access billed annually. | Present in the live RevenueCat offering; end-to-end store test remains required. |
+| Moonveil Premium Monthly | Auto-renewing subscription | Play product `moonveil_premium_monthly`, base plan `monthly`; RevenueCat package `$rc_monthly`, entitlement `premium` | Saves the account owner’s profile, date of birth, personal numerology and name numerology; billed monthly. | Present in the live RevenueCat offering and published paywall; end-to-end store test remains required. |
+| Moonveil Premium Annual | Auto-renewing subscription | Play product `moonveil_premium_monthly`, base plan `annual`; RevenueCat package `$rc_annual`, entitlement `premium` | Saves the account owner’s profile, date of birth, personal numerology and name numerology; billed annually. | Present in the live RevenueCat offering and published paywall; end-to-end store test remains required. |
 | Moonveil Premium Lifetime | One-time non-consumable | No live package | Future option only, subject to a store product, purchase screen and release review. | Not present in the live RevenueCat offering as of 7 August 2026 and must not be advertised as currently purchasable. |
 | Premium deck unlock | One-time non-consumable | Per-deck product ID and `DECK_UNLOCK` target key | Permanent store entitlement to the identified deck without requiring the full subscription. | Backend model supports it. Exact catalog/product IDs are not fixed in the production seed and must be configured per deck. |
-| Premium module unlock | One-time non-consumable | Per-module product ID and `MODULE_UNLOCK` target key | Access to the identified module without requiring the full subscription. | Backend model supports it. Exact product catalog is not final. |
+| Premium module unlock | Future/WIP only | No active release product | Not part of the current paid offer. | Backend capability does not make this a released or advertised product. |
 | Profile access | Entitlement | RevenueCat identifier `profile` | Save local esoteric profile and full numerology. | Included in monthly premium. |
-| Custom spreads | Entitlement | RevenueCat identifier `custom_spreads` | User-defined tarot spreads. | Included in monthly premium; backend also permits targeted entitlement. |
-| Backup & Export | Entitlement | RevenueCat identifier `backup` | Optional versioned cloud backup of local user payload. | Backend and mobile upload/restore/delete UI are present. The deployed backend accepts and records the consent version, scope and timestamp sent for each upload; end-to-end release evidence remains required. |
-| Cross-device Sync | Entitlement | RevenueCat identifier `sync` | Versioned restore/sync between devices. | Included in product model; user-facing final flow not yet verified. |
+| Custom spreads | WIP entitlement | RevenueCat identifier `custom_spreads` exists for future use | Not part of the current advertised Premium benefit. | Do not advertise until the feature and commercial configuration pass a release review. |
+| Optional cloud backup | Operational feature, not a current Premium promise | RevenueCat identifier `backup` exists for future product decisions | User-initiated backup/restore/delete where exposed; not advertised as part of the current Premium benefit. | Backend/mobile capability exists; final end-to-end release evidence remains required. |
+| Cross-device Sync | WIP entitlement | RevenueCat identifier `sync` exists for future use | Not part of the current advertised Premium benefit. | User-facing final flow has not passed release verification. |
 
 ### Important commercial rules
 
@@ -45,7 +45,7 @@ This document records the product and technical facts used to draft the public l
 | Billing | RevenueCat webhook, entitlement mapping, subscriptions, purchase transactions, billing events and audit history were implemented in merged backend PR #71. |
 | Account deletion | Production deployment exposes `DELETE /me`, deletes linked application records and requests RevenueCat customer deletion; mobile UI calls this endpoint. End-to-end release evidence remains required. |
 | Cloud backup | Production backend provides versioned `GET/PUT/DELETE /me/backup`, arbitrary JSON payload, a 5 MB limit and consent-evidence fields. Payload is not end-to-end encrypted in the App. Scheduled cleanup rotates restricted local database copies; daily restic snapshots are encrypted before upload to a dedicated private off-site R2 bucket and expire after 14 days. |
-| Public policy references | PR #2 is merged, the canonical public pages are reachable, and Google Play now references the exact Privacy Policy URL. The corrected Data safety draft contains the final account- and separate-data-deletion URL. |
+| Public policy references | PR #2 is merged, the canonical public pages are reachable, and Google Play now references the exact Privacy Policy URL. The submitted Data safety form contains the final account- and separate-data-deletion URL. |
 | Mobile billing SDK | `react-native-purchases` and `react-native-purchases-ui` are present. Purchase, restore, cancellation and expiry must still be tested in the exact store build. |
 | Mobile permissions | Expo image picker and localization packages are present. The final permission manifests and actual feature use must be audited. |
 | Web payments/auth | The reviewed Astro web `package.json` contains no payment, auth, analytics or advertising SDK. |
@@ -97,7 +97,7 @@ Before enabling cloud backup in production:
 
 - Google — Google Sign-In and Google Play billing; may be an independent controller for store/account services.
 - Apple — Sign in with Apple and App Store billing; may be an independent controller for store/account services.
-- RevenueCat — processor for subscriber, purchase and entitlement data. Subscriber deletion is implemented; DPA acceptance/archival was not verified. The live offering has monthly and annual packages and no published paywall.
+- RevenueCat — processor for subscriber, purchase and entitlement data. Subscriber deletion is implemented; DPA acceptance/archival was not verified. The live offering has monthly and annual packages and published paywall `wf3a25160e977b42a9`.
 - Contabo — VPS/backend/PostgreSQL/logs in region EU. The production-VPS DPA became active on 10 August 2026. Provider Auto Backup remains disabled. A port plan and default-drop provider firewall are active; local database copies remain restricted and rotated.
 - Cloudflare R2 — delivery/storage of application content assets plus a separate private bucket containing restic-encrypted production database disaster-recovery snapshots. The live optional user backup remains in PostgreSQL; R2 receives only the encrypted database-copy repository.
 - Expo/650 Industries — EAS build/update infrastructure where enabled; verify runtime data collection and DPA.
@@ -106,10 +106,10 @@ Before enabling cloud backup in production:
 ## Known launch blockers
 
 - Confirm that the operator identity, address, tax ID and email published in `privacy.html` exactly match the production store and business records.
-- Google Play's live Data safety form still requires replacement. The corrected draft now records collection, TLS, OAuth, separate deletion and final policy/deletion URLs; complete detailed data types after the final-AAB/SDK audit, then submit before production rollout.
+- The corrected Google Play Data safety form records collection, TLS, OAuth, separate deletion and final policy/deletion URLs. It was submitted on 11 August 2026 and is pending Google review.
 - The Contabo DPA, firewall and encrypted off-site backup are configured. Archive the DPA privately and retain a successful non-destructive restore/integrity test.
 - Google OAuth remains in Testing and its Android SHA-1 does not match Play App Signing. The merged public policy URLs are now ready for the remaining OAuth configuration update.
-- RevenueCat has no published paywall and no live lifetime package. Confirm the intended purchase UI and run end-to-end billing, restore and deletion tests.
+- RevenueCat paywall `wf3a25160e977b42a9` is published and there is no live lifetime package. Run end-to-end billing, restore and deletion tests before rollout.
 - Production end-to-end evidence for account/purchase-provider deletion and backup consent/restore/delete is still required.
 - Container log rotation, the 12-month support target and database-backup restore behaviour require retained operational evidence.
 - Store privacy declarations must be completed from the final release binary, not only source package files.

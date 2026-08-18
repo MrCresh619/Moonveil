@@ -12,7 +12,7 @@ Google Play requires declarations for data collected or shared by the App **and 
 |---|---|---|
 | Does the App allow users to create an account? | **Yes.** | Guest mode does not remove the requirement because an account/sign-in flow exists. |
 | Can users request account deletion in the App? | **Yes.** | `Account → Delete account` calls the deployed `DELETE /me`; retain an end-to-end test of the external purchase-provider deletion. |
-| Is there an external account deletion resource? | **Yes — `https://mrcresh619.github.io/Moonveil/account-deletion.html`.** | Entered in the corrected draft for both account deletion and separate data deletion on 10 August 2026. |
+| Is there an external account deletion resource? | **Yes — `https://moonveilguidance.com/account-deletion.html`.** | Entered in the corrected draft for both account deletion and separate data deletion on 10 August 2026. |
 | Is data encrypted in transit? | **Yes.** | The inspected production API and public endpoints use HTTPS/TLS; recheck all destinations in the final AAB. |
 | Can users request deletion of collected data? | **Yes.** | Account deletion plus separate optional-backup deletion. Disclose lawful retention. |
 

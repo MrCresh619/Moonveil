@@ -18,9 +18,9 @@ Legal-content baseline commit: **`e558b77ac9c598adc8419c29b1d27b8f2dc06f5e`**
 
 Canonical public URLs:
 
-- https://mrcresh619.github.io/Moonveil/privacy.html
-- https://mrcresh619.github.io/Moonveil/terms.html
-- https://mrcresh619.github.io/Moonveil/account-deletion.html
+- https://moonveilguidance.com/privacy.html
+- https://moonveilguidance.com/terms.html
+- https://moonveilguidance.com/account-deletion.html
 
 ## Required before production rollout
 

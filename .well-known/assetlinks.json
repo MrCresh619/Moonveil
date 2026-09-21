@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.tealdev.moonveil",
+      "sha256_cert_fingerprints": [
+        "34:7E:97:AD:AB:C4:67:05:F5:8C:CF:76:D3:D4:9E:41:00:56:12:BC:2F:BA:15:00:72:D7:DF:9C:9A:B4:4B:74"
+      ]
+    }
+  }
+]

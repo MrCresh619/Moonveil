@@ -9,6 +9,19 @@ This repository hosts the public legal pages and the internal compliance documen
 - `terms.html` — Terms of Use / Regulamin
 - `account-deletion.html` — account and data deletion instructions
 - `cookies.html` — Cookie and Local Storage Policy
+- `.well-known/assetlinks.json` — Android Digital Asset Links declaration for the Play-signed `com.tealdev.moonveil` app
+
+## Android App Links host
+
+`app.moonveilguidance.com` is a dedicated Cloudflare Worker custom domain. Its versioned source is `worker/app-links.mjs`; it serves `/.well-known/assetlinks.json` directly with HTTP 200 and no redirect, and provides a safe browser fallback for `/app` paths. The Play App Signing SHA-256 fingerprint is intentionally the only certificate fingerprint in the declaration.
+
+Validate the Worker source locally with:
+
+```bash
+node --test worker/app-links.test.mjs
+```
+
+After every deployment, verify HTTPS and Android domain state from a clean Play-installed build. A successful HTTP response alone is not proof that Android accepted the association.
 
 ## Internal documents
 
